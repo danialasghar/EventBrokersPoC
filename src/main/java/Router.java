@@ -1,4 +1,6 @@
+import java.io.IOException;
 import java.util.Scanner;
+import java.util.concurrent.TimeoutException;
 
 public class Router {
     public static void main(String[] args) {
@@ -16,6 +18,7 @@ public class Router {
         switch(selection){
             case 1:
                 RabbitMQ rabbitBroker = new RabbitMQ();
+                rabbitBroker.SendMessage();
                 break;
             case 2:
                 break;
