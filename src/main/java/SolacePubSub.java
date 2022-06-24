@@ -10,10 +10,10 @@ import com.solacesystems.jcsmp.XMLMessageProducer;
 
 public class SolacePubSub {
 
-	public static final String SOLACE_HOST = "";
+	public static final String SOLACE_HOST = "pubsubplus-openshift-pubsubplus-openshift.solace-system.svc.cluster.local";
 	public static final String SOLACE_USERNAME = "";
-	public static final String SOLACE_VPN_NAME = "";
 	public static final String SOLACE_PASSWORD = "";
+	public static final String SOLACE_VPN_NAME = "";
 	
 	public static final String SOLACE_TOPIC_NAME = "test/topic";
 	
@@ -53,10 +53,22 @@ public class SolacePubSub {
 	
 	private void connect() {
 		JCSMPProperties properties = new JCSMPProperties();
-		properties.setProperty(JCSMPProperties.HOST,SOLACE_HOST);
-		properties.setProperty(JCSMPProperties.USERNAME, SOLACE_USERNAME);
-		properties.setProperty(JCSMPProperties.VPN_NAME, SOLACE_VPN_NAME);
-		properties.setProperty(JCSMPProperties.PASSWORD, SOLACE_PASSWORD);
+		
+		if (SOLACE_HOST != null && !SOLACE_HOST.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.HOST,SOLACE_HOST);
+		}
+
+		if (SOLACE_USERNAME != null && !SOLACE_USERNAME.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.USERNAME, SOLACE_USERNAME);
+		}
+		
+		if (SOLACE_PASSWORD != null && !SOLACE_PASSWORD.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.PASSWORD, SOLACE_PASSWORD);
+		}
+		
+		if (SOLACE_VPN_NAME != null && !SOLACE_VPN_NAME.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.VPN_NAME, SOLACE_VPN_NAME);
+		}
 		
 		try {
 			session = JCSMPFactory.onlyInstance().createSession(properties);
