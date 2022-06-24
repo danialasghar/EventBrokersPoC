@@ -4,6 +4,7 @@ import java.util.concurrent.TimeoutException;
 
 public class Router {
 
+	/*
     private static int instanceID;
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
@@ -57,4 +58,5 @@ public class Router {
                 break;
         }
     }
+    */
 }
