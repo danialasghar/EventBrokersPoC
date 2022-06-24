@@ -25,7 +25,7 @@ public class RabbitMQ {
         }
     }
 
-    public void SendMessage(){
+    public void sendMessage(){
         try {
         	String message = Utils.buildMessage(instanceID);
         	

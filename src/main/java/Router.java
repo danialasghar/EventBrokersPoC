@@ -43,7 +43,7 @@ public class Router {
                 Thread t = new Thread(() -> {
                     instanceID += 1;
                     RabbitMQ rabbitBroker = new RabbitMQ(instanceID);
-                    rabbitBroker.SendMessage();
+                    rabbitBroker.sendMessage();
                 });
                 t.start();
                 break;
