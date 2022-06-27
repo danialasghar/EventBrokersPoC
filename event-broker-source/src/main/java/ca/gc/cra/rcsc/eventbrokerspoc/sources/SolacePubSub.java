@@ -14,7 +14,7 @@ import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 public class SolacePubSub {
 
 	public static final String SOLACE_HOST = "pubsubplus-openshift-pubsubplus-openshift.solace-system.svc.cluster.local";
-	public static final String SOLACE_USERNAME = "";
+	public static final String SOLACE_USERNAME = "test";
 	public static final String SOLACE_PASSWORD = "";
 	public static final String SOLACE_VPN_NAME = "";
 	
