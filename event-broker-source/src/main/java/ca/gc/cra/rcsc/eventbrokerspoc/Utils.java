@@ -3,7 +3,7 @@ import java.text.SimpleDateFormat;
 
 public class Utils {
 
-	public static final String MESSSAGE_FORMAT = "yyyy.MM.dd.HH - mm.ss.SSS";
+	public static final String MESSSAGE_FORMAT = "yyyy.MM.dd - HH.mm.ss.SSS";
 	
 	
 	public static String buildMessage(int instanceID) {
