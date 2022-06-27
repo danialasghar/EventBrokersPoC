@@ -43,7 +43,11 @@ public class SolacePubSub {
 		Topic topic = JCSMPFactory.onlyInstance().createTopic(SOLACE_TOPIC_NAME);
 		TextMessage msg = JCSMPFactory.onlyInstance().createMessage(TextMessage.class);
 
-		msg.setText(Utils.buildMessage(instanceID));
+		String messageText = Utils.buildMessage(instanceID);
+		
+		msg.setText(messageText);
+		
+		System.out.println("MESSAGE SENT: " + messageText);
 		
 		try {
 			producer.send(msg,topic);
