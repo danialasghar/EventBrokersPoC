@@ -1,3 +1,4 @@
+package ca.gc.cra.rcsc.eventbrokerspoc;
 import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.TimeoutException;

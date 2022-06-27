@@ -1,3 +1,4 @@
+package ca.gc.cra.rcsc.eventbrokerspoc.sources;
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPException;
 import com.solacesystems.jcsmp.JCSMPFactory;
@@ -7,6 +8,8 @@ import com.solacesystems.jcsmp.JCSMPStreamingPublishCorrelatingEventHandler;
 import com.solacesystems.jcsmp.TextMessage;
 import com.solacesystems.jcsmp.Topic;
 import com.solacesystems.jcsmp.XMLMessageProducer;
+
+import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 
 public class SolacePubSub {
 

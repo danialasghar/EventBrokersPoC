@@ -1,3 +1,4 @@
+package ca.gc.cra.rcsc.eventbrokerspoc;
 import java.text.SimpleDateFormat;
 
 public class Utils {

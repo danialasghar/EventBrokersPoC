@@ -1,4 +1,8 @@
+package ca.gc.cra.rcsc.eventbrokerspoc.sources;
 import com.rabbitmq.client.ConnectionFactory;
+
+import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
+
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
