@@ -51,6 +51,11 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-openapi</artifactId>
     </dependency>
+	<dependency>
+		<groupId>com.solacesystems</groupId>
+		<artifactId>sol-jcsmp</artifactId>
+		<version>[10,)</version>
+	</dependency>
   </dependencies>
   <build>
     <plugins>
