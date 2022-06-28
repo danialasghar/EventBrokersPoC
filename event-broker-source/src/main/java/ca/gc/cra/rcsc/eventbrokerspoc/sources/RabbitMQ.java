@@ -24,6 +24,8 @@ public class RabbitMQ {
         this.factory = new ConnectionFactory();
         this.factory.setHost("rabbitmq-demo-clusterip.rabbitmq-system.svc");
         this.factory.setPort(5672);
+        this.factory.setUsername("default_user_VSFzxVHbwelOyeyHmSZ");
+        this.factory.setPassword("u0845E5Wl-AepkvZP1vObVLFnEvopyK6");
         try {
             this.connection = factory.newConnection();
         } catch (IOException | TimeoutException e) {
