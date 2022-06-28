@@ -47,7 +47,6 @@ public class SolacePubSub {
 		try {
 			session.addSubscription(topic);
 			consumer.start();
-			
 		} catch (JCSMPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
