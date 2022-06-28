@@ -72,10 +72,12 @@ public class IbmMQ {
             } catch (InterruptedException e) {
             }
         }
+        return 0;
     }
 
     public void close() {
         ch.closeContext();
         ch = null;
+        return 0;
     }
 }
