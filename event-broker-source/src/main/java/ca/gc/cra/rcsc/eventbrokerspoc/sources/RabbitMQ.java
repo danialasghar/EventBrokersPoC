@@ -13,7 +13,7 @@ import java.util.concurrent.TimeoutException;
 
 public class RabbitMQ {
 
-    private final static String QUEUE_NAME = "hello";
+    private final static String QUEUE_NAME = "POC";
     ConnectionFactory factory;
     Connection connection;
     private int instanceID;
@@ -21,7 +21,8 @@ public class RabbitMQ {
     public RabbitMQ(int instanceID){
         this.instanceID = instanceID;
         this.factory = new ConnectionFactory();
-        this.factory.setHost("localhost");
+        this.factory.setHost("rabbitmq-demo-clusterip.rabbitmq-system.svc");
+        this.factory.setPort(5672);
         try {
             this.connection = factory.newConnection();
         } catch (IOException | TimeoutException e) {
