@@ -1,3 +1,5 @@
+package ca.gc.cra.rcsc.eventbrokerspoc.dependencies;
+
 import java.util.logging.*;
 
 import javax.jms.Message;

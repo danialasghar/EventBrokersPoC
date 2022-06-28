@@ -1,10 +1,14 @@
+package ca.gc.cra.rcsc.eventbrokerspoc.sources;
+
 import java.util.logging.*;
 import javax.jms.Destination;
 import javax.jms.JMSProducer;
 import javax.jms.JMSContext;
 import javax.jms.Message;
 import javax.jms.JMSRuntimeException;
-
+import ca.gc.cra.rcsc.eventbrokerspoc.dependencies.ConsumerHelper;
+import ca.gc.cra.rcsc.eventbrokerspoc.dependencies.ConnectionHelper;
+import ca.gc.cra.rcsc.eventbrokerspoc.dependencies.LoggingHelper;
 
 public class IbmMQ {
     private static final Logger logger = Logger.getLogger("com.ibm.mq.samples.jms");
@@ -17,7 +21,7 @@ public class IbmMQ {
     private JMSProducer producer = null;
     private ConnectionHelper ch = null;
 
-    public BasicProducer(String type) {
+    public IbmMQ(String type) {
         String id = null;
 
         switch(type){
@@ -72,12 +76,10 @@ public class IbmMQ {
             } catch (InterruptedException e) {
             }
         }
-        return 0;
     }
 
     public void close() {
         ch.closeContext();
         ch = null;
-        return 0;
     }
 }

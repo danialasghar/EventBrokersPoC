@@ -1,4 +1,4 @@
-
+package ca.gc.cra.rcsc.eventbrokerspoc.dependencies;
 import java.util.logging.*;
 
 public class LoggingHelper {
