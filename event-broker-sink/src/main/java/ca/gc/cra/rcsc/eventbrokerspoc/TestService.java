@@ -8,12 +8,14 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sinks.SolacePubSub;
 @Path("/test")
 public class TestService {
 
+	private SolacePubSub solace;
+	
 	@GET
     @Path("/solace")
     public void connectToSolace() {
-    	SolacePubSub solace = new SolacePubSub(1);
+    	solace = new SolacePubSub();
 
-    	//solace.sendMessage();
+    	solace.connectToTopic();
     }
 
 }

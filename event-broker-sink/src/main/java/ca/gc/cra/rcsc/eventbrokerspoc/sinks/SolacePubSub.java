@@ -8,6 +8,7 @@ import com.solacesystems.jcsmp.JCSMPFactory;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.JCSMPSession;
 import com.solacesystems.jcsmp.TextMessage;
+import com.solacesystems.jcsmp.Topic;
 import com.solacesystems.jcsmp.XMLMessageConsumer;
 import com.solacesystems.jcsmp.XMLMessageListener;
 import com.solacesystems.jcsmp.XMLMessageProducer;
@@ -22,18 +23,35 @@ public class SolacePubSub {
 	
 	public static final String SOLACE_TOPIC_NAME = "test/topic";
 	
-	private int instanceID;
-	
 	private JCSMPSession session;
 	private XMLMessageConsumer consumer;
 	
 	
-	public SolacePubSub(int instanceID) {
-		this.instanceID = instanceID;
-		
+	public SolacePubSub() {
 		connect();
 		
 		buildConsumer();
+	}
+	
+	public void connectToTopic() {
+		if (session == null) {
+			System.out.println("ERROR: No session to connectToTopic");
+			return;
+		}
+		if (consumer == null) {
+			System.out.println("ERROR: No consumer to connectToTopic");
+			return;
+		}
+		
+		Topic topic = JCSMPFactory.onlyInstance().createTopic(SOLACE_TOPIC_NAME);
+		try {
+			session.addSubscription(topic);
+			consumer.start();
+			
+		} catch (JCSMPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void connect() {
@@ -102,6 +120,8 @@ public class SolacePubSub {
 		} catch (JCSMPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			
+			consumer = null;
 		}
 	}
 	
