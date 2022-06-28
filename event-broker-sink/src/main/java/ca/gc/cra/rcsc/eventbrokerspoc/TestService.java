@@ -8,11 +8,12 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sinks.SolacePubSub;
 @Path("/connect")
 public class TestService {
 
-	private SolacePubSub solace = null;
+	static private SolacePubSub solace;
 	
-	public TestService() {
-		//Connect @ startup
-		connectToSolace();
+	static {
+		//Create new instance and connect it
+		solace = new SolacePubSub();
+		solace.connectToTopic();
 	}
 	
 	@GET
