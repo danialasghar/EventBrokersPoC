@@ -53,6 +53,28 @@ public class SolacePubSub {
 		}
 	}
 	
+	public void diconnectFromTopic() {
+		if (session == null) {
+			System.out.println("ERROR: No session to diconnectFromTopic");
+			return;
+		}
+		if (consumer == null) {
+			System.out.println("ERROR: No consumer to diconnectFromTopic");
+			return;
+		}
+		
+		Topic topic = JCSMPFactory.onlyInstance().createTopic(SOLACE_TOPIC_NAME);
+		consumer.stop();
+		
+		try {
+			session.removeSubscription(topic);
+		} catch (JCSMPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	private void connect() {
 		JCSMPProperties properties = new JCSMPProperties();
 		
