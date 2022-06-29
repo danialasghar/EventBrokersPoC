@@ -32,13 +32,7 @@ public class TestService {
 		String result = "Status:\n";
 		
 		//Solace
-		result += "Solace: ";
-		if (solace != null) {
-			result += "connected";
-		} else {
-			result += "disconnected";
-		}
-		result += "\n";
+		result += "Solace: " + Utils.isConnectedNullCheck(solace) + "\n";
 		
 		return result;
 	}
