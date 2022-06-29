@@ -4,14 +4,13 @@ import java.util.logging.*;
 import javax.jms.Destination;
 import javax.jms.JMSProducer;
 import javax.jms.JMSContext;
-import javax.jms.Message;
 import javax.jms.JMSRuntimeException;
-import ca.gc.cra.rcsc.eventbrokerspoc.dependencies.ConsumerHelper;
-import ca.gc.cra.rcsc.eventbrokerspoc.dependencies.ConnectionHelper;
-import ca.gc.cra.rcsc.eventbrokerspoc.dependencies.LoggingHelper;
+
+import ca.gc.cra.rcsc.eventbrokerspoc.ibmdependencies.ConnectionHelper;
+import ca.gc.cra.rcsc.eventbrokerspoc.ibmdependencies.LoggingHelper;
 
 public class IbmMQ {
-    private static final Logger logger = Logger.getLogger("com.ibm.mq.samples.jms");
+//    private static final Logger logger = Logger.getLogger("com.ibm.mq.samples.jms");
 
     public static final String PRODUCER_PUT = "queue";
     public static final String PRODUCER_PUB = "topic";
@@ -33,14 +32,15 @@ public class IbmMQ {
                 break;
         }
 
-        LoggingHelper.init(logger);
-        logger.info("Sub application is starting");
-
+//        LoggingHelper.init(logger);
+//        logger.info("Sub application is starting");
+        System.out.println("IBM: Sub application is starting");
         ch = new ConnectionHelper(id, ConnectionHelper.USE_CONNECTION_STRING);
-        logger.info("created connection factory");
+//        logger.info("created connection factory");
+        System.out.println("IBM: Created connection factory");
 
         context = ch.getContext();
-        logger.info("context created");
+//        logger.info("context created");
 
         switch(type){
             case PRODUCER_PUB :
@@ -54,18 +54,19 @@ public class IbmMQ {
         // Set so no JMS headers are sent.
         ch.setTargetClient(destination);
 
-        logger.info("destination created");
-
+//        logger.info("destination created");
+        System.out.println("IBM: Context and destination created");
         producer = context.createProducer();
     }
 
     public void send(String message, int n_messages) {
         for (int i = 0; i < n_messages; i++) {
-            logger.info("Publishing messages.\n");
-
+//            logger.info("Publishing messages.\n");
+            System.out.println("Publishing messages");
             try {
                 producer.send(destination, message);
-                logger.info("message was sent");
+//                logger.info("message was sent");
+                System.out.println("Message was sent");
                 Thread.sleep(2000);
             } catch (JMSRuntimeException jmsex) {
                 jmsex.printStackTrace();

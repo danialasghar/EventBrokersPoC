@@ -1,4 +1,4 @@
-package ca.gc.cra.rcsc.eventbrokerspoc.dependencies;
+package ca.gc.cra.rcsc.eventbrokerspoc.ibmdependencies;
 import java.util.logging.*;
 import org.json.simple.parser.ParseException;
 import org.json.simple.parser.JSONParser;
