@@ -58,9 +58,9 @@ public class TestService {
     @POST
     @Path("/artemis/generate")
     @Produces(MediaType.TEXT_PLAIN)
-    public String createMessage() {
+    public String createMessage(String newMessage) {
         UUID uuid = UUID.randomUUID();
-        messageEmitter.send(uuid.toString()); // <2>
+        messageEmitter.send(newMessage + uuid.toString()); // <2>
         return uuid.toString();
     }
 }
