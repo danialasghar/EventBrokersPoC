@@ -100,11 +100,11 @@ public class ConnectionHelper {
 
         HOST = "samplequeue-ibm-mq.ibmmq-system.svc";
         PORT = 1414;
-        CHANNEL = "DEV.APP.SVRCONN";
-        QMGR = "QM1";
+        CHANNEL = "SYSTEM.LISTENER.TCP.1";
+        QMGR = "samplequeue";
         APP_USER = "admin";
         APP_PASSWORD = "passw0rd";
-        QUEUE_NAME = "DEV.QUEUE.1";
+        QUEUE_NAME = "AMQ.62BB04CB22EA7505\n";
         TOPIC_NAME = "";
 //        CIPHER_SUITE = "";
     }
