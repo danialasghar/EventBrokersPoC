@@ -100,7 +100,7 @@ public class ConnectionHelper {
 
         HOST = "samplequeue-ibm-mq.ibmmq-system.svc";
         PORT = 1414;
-        CHANNEL = "SYSTEM.LISTENER.TCP.1";
+        CHANNEL = "input";
         QMGR = "samplequeue";
         APP_USER = "admin";
         APP_PASSWORD = "passw0rd";
