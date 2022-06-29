@@ -100,11 +100,11 @@ public class ConnectionHelper {
 
         HOST = "samplequeue-ibm-mq.ibmmq-system.svc";
         PORT = 1414;
-        CHANNEL = "DEV.APP.SVRCONN";
-        QMGR = "QM1";
+        CHANNEL = "SYSTEM.LISTENER.TCP.1";
+        QMGR = "samplequeue";
         APP_USER = "admin";
         APP_PASSWORD = "passw0rd";
-        QUEUE_NAME = "DEV.QUEUE.1";
+        QUEUE_NAME = "AMQ.62BB04CB22EA7505\n";
         TOPIC_NAME = "";
 //        CIPHER_SUITE = "";
     }
@@ -124,20 +124,20 @@ public class ConnectionHelper {
 
     private void setJMSProperties(JmsConnectionFactory cf, String id, int index) {
         try {
-            if (null == CCDTURL) {
-                if (USE_CONNECTION_STRING == index) {
-                    cf.setStringProperty(WMQConstants.WMQ_CONNECTION_NAME_LIST, ConnectionString);
-                } else {
+//            if (null == CCDTURL) {
+//                if (USE_CONNECTION_STRING == index) {
+//                    cf.setStringProperty(WMQConstants.WMQ_CONNECTION_NAME_LIST, ConnectionString);
+//                } else {
                     cf.setStringProperty(WMQConstants.WMQ_HOST_NAME, HOST);
                     cf.setIntProperty(WMQConstants.WMQ_PORT, PORT);
-                }
+//                }
                 cf.setStringProperty(WMQConstants.WMQ_CHANNEL, CHANNEL);
-            } else {
+//            } else {
 //                logger.info("Will be making use of CCDT File " + CCDTURL);
-                System.out.println("Will be making use of CCDT File " + CCDTURL);
-                cf.setStringProperty(WMQConstants.WMQ_CCDTURL, CCDTURL);
-
-            }
+//                System.out.println("Will be making use of CCDT File " + CCDTURL);
+//                cf.setStringProperty(WMQConstants.WMQ_CCDTURL, CCDTURL);
+//
+//            }
 
             cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_CLIENT);
             cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, QMGR);
