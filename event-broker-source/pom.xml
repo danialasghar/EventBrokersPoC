@@ -43,10 +43,13 @@
       <artifactId>json-simple</artifactId>
       <version>1.1.1</version>
     </dependency>
+<<<<<<< HEAD
 	<!-- <dependency>
     	<groupId>io.quarkus</groupId>
 		<artifactId>quarkus-resteasy</artifactId>
     </dependency> -->
+=======
+>>>>>>> 063960be850acf57cfa29ab299441934501ba9ee
 	<dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-smallrye-openapi</artifactId>

@@ -1,4 +1,4 @@
-package ca.gc.cra.rcsc.eventbrokerspoc.dependencies;
+package ca.gc.cra.rcsc.eventbrokerspoc.ibmdependencies;
 
 import java.util.logging.*;
 import javax.jms.Destination;
@@ -13,7 +13,7 @@ import com.ibm.mq.jms.MQDestination;
 public class ConnectionHelper {
 
     private static final Level LOGLEVEL = Level.ALL;
-    private static final Logger logger = Logger.getLogger("com.ibm.mq.samples.jms");
+//    private static final Logger logger = Logger.getLogger("com.ibm.mq.samples.jms");
     public static final int USE_CONNECTION_STRING = -1;
 
     // Create variables for the connection to MQ
@@ -35,14 +35,14 @@ public class ConnectionHelper {
 
         //initialiseLogging();
         mqConnectionVariables(index);
-        logger.info("Get application is starting");
+//        logger.info("Get application is starting");
 
         JmsConnectionFactory connectionFactory = createJMSConnectionFactory();
         setJMSProperties(connectionFactory, id, index);
-        logger.info("created connection factory");
+//        logger.info("created connection factory");
 
         context = connectionFactory.createContext();
-        logger.info("context created");
+//        logger.info("context created");
 
     }
 
@@ -70,31 +70,43 @@ public class ConnectionHelper {
             MQDestination mqDestination = (MQDestination) destination;
             mqDestination.setTargetClient(WMQConstants.WMQ_CLIENT_NONJMS_MQ);
         } catch (JMSException jmsex) {
-            logger.warning("Unable to set target destination to non JMS");
+//            logger.warning("Unable to set target destination to non JMS");
+            System.out.println("Unable to set target destination to non JMS");
         }
     }
 
     private void mqConnectionVariables(int index) {
-        EnvSetter env = new EnvSetter();
+//        EnvSetter env = new EnvSetter();
+//
+//        if (USE_CONNECTION_STRING == index) {
+//            ConnectionString = env.getConnectionString();
+////            logger.info("Connecting to " + ConnectionString);
+//            System.out.println("Connecting to " + ConnectionString);
+//            index = 0;
+//        } else {
+//            HOST = env.getEnvValue("HOST", index);
+//            PORT = Integer.parseInt(env.getEnvValue("PORT", index));
+////            logger.info("Connection to " + HOST + "(" + PORT + ")");
+//            System.out.println("Connection to " + HOST + "(" + PORT + ")");
+//        }
+//        CHANNEL = env.getEnvValue("CHANNEL", index);
+//        QMGR = env.getEnvValue("QMGR", index);
+//        APP_USER = env.getEnvValue("APP_USER", index);
+//        APP_PASSWORD = env.getEnvValue("APP_PASSWORD", index);
+//        QUEUE_NAME = env.getEnvValue("QUEUE_NAME", index);
+//        TOPIC_NAME = env.getEnvValue("TOPIC_NAME", index);
+//        CIPHER_SUITE = env.getEnvValue("CIPHER_SUITE", index);
+//        CCDTURL = env.getCheckForCCDT();
 
-        if (USE_CONNECTION_STRING == index) {
-            ConnectionString = env.getConnectionString();
-            logger.info("Connecting to " + ConnectionString);
-            index = 0;
-        } else {
-            HOST = env.getEnvValue("HOST", index);
-            PORT = Integer.parseInt(env.getEnvValue("PORT", index));
-            logger.info("Connection to " + HOST + "(" + PORT + ")");
-        }
-        CHANNEL = env.getEnvValue("CHANNEL", index);
-        QMGR = env.getEnvValue("QMGR", index);
-        APP_USER = env.getEnvValue("APP_USER", index);
-        APP_PASSWORD = env.getEnvValue("APP_PASSWORD", index);
-        QUEUE_NAME = env.getEnvValue("QUEUE_NAME", index);
-        TOPIC_NAME = env.getEnvValue("TOPIC_NAME", index);
-        CIPHER_SUITE = env.getEnvValue("CIPHER_SUITE", index);
-
-        CCDTURL = env.getCheckForCCDT();
+        HOST = "samplequeue-ibm-mq.ibmmq-system.svc";
+        PORT = 1414;
+        CHANNEL = "DEV.APP.SVRCONN";
+        QMGR = "QM1";
+        APP_USER = "admin";
+        APP_PASSWORD = "passw0rd";
+        QUEUE_NAME = "DEV.QUEUE.1";
+        TOPIC_NAME = "";
+//        CIPHER_SUITE = "";
     }
 
     private JmsConnectionFactory createJMSConnectionFactory() {
@@ -121,8 +133,10 @@ public class ConnectionHelper {
                 }
                 cf.setStringProperty(WMQConstants.WMQ_CHANNEL, CHANNEL);
             } else {
-                logger.info("Will be making use of CCDT File " + CCDTURL);
+//                logger.info("Will be making use of CCDT File " + CCDTURL);
+                System.out.println("Will be making use of CCDT File " + CCDTURL);
                 cf.setStringProperty(WMQConstants.WMQ_CCDTURL, CCDTURL);
+
             }
 
             cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_CLIENT);
@@ -144,21 +158,26 @@ public class ConnectionHelper {
             if (ex instanceof JMSException) {
                 processJMSException((JMSException) ex);
             } else {
-                logger.warning(ex.getMessage());
+//                logger.warning(ex.getMessage());
+                System.out.println(ex.getMessage());
             }
         }
         System.out.println("FAILURE");
     }
 
     private static void processJMSException(JMSException jmsex) {
-        logger.info(jmsex.getMessage());
+//        logger.info(jmsex.getMessage());
+        System.out.println(jmsex.getMessage());
         Throwable innerException = jmsex.getLinkedException();
-        logger.info("Exception is: " + jmsex);
+//        logger.info("Exception is: " + jmsex);
+        System.out.println("Exception is: " + jmsex);
         if (innerException != null) {
-            logger.info("Inner exception(s):");
+//            logger.info("Inner exception(s):");
+            System.out.println("Inner exception(s):");
         }
         while (innerException != null) {
-            logger.warning(innerException.getMessage());
+//            logger.warning(innerException.getMessage());
+            System.out.println(innerException.getMessage());
             innerException = innerException.getCause();
         }
     }
