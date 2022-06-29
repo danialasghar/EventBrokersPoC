@@ -22,7 +22,7 @@ import io.smallrye.mutiny.Multi;
 public class TestService {
 
 
-    @Channel("new-artemis-message") Emitter<String> messageEmitter; // <1>
+    @Channel("new-artemis") Emitter<String> messageEmitter; // <1>
 
 
 	@GET
