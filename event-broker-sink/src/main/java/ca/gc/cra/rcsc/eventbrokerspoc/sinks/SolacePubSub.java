@@ -1,6 +1,8 @@
 package ca.gc.cra.rcsc.eventbrokerspoc.sinks;
 
 
+import javax.enterprise.context.ApplicationScoped;
+
 import com.solacesystems.jcsmp.BytesXMLMessage;
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPException;
@@ -11,9 +13,8 @@ import com.solacesystems.jcsmp.TextMessage;
 import com.solacesystems.jcsmp.Topic;
 import com.solacesystems.jcsmp.XMLMessageConsumer;
 import com.solacesystems.jcsmp.XMLMessageListener;
-import com.solacesystems.jcsmp.XMLMessageProducer;
 
-
+@ApplicationScoped
 public class SolacePubSub {
 
 	public static final String SOLACE_HOST = "pubsubplus-openshift-pubsubplus-openshift.solace-system.svc.cluster.local";
@@ -31,6 +32,8 @@ public class SolacePubSub {
 		connect();
 		
 		buildConsumer();
+		
+		connectToTopic();
 	}
 	
 	public void connectToTopic() {

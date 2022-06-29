@@ -1,7 +1,7 @@
-import java.util.Random;
+package ca.gc.cra.rcsc.eventbrokerspoc.sinks;
+
 import javax.enterprise.context.ApplicationScoped;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
-import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import io.smallrye.reactive.messaging.annotations.Blocking;
 
