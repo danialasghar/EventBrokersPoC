@@ -42,6 +42,7 @@ public class TestService {
 	@Path("/rabbitmq")
 	public void connectToRabbitMQ(){
 		RabbitMQ rabbitMQ = new RabbitMQ(1);
+		rabbitMQ.receiveMessage();
 	}
 
 }
