@@ -50,7 +50,7 @@ public class SolacePubSub {
 		System.out.println("MESSAGE SENT: " + messageText);
 		
 		try {
-			producer.send(msg,topic);
+			producer.send(msg, topic);
 		} catch (JCSMPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
