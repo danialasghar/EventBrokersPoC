@@ -42,7 +42,7 @@ public class TestService {
     }
 
     @GET
-    @Path("/IBM/put/pub")
+    @Path("/IBM/pub")
     public void testIbmMQPub(){
         IbmMQ ibmMQ = new IbmMQ("PRODUCER_PUB");
         ibmMQ.send("Testing IBM Publish", 1);
