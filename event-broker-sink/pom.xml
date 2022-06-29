@@ -56,6 +56,11 @@
 		<artifactId>sol-jcsmp</artifactId>
 		<version>[10,)</version>
 	</dependency>
+    <dependency>
+      <groupId>com.rabbitmq</groupId>
+      <artifactId>amqp-client</artifactId>
+      <version>5.15.0</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

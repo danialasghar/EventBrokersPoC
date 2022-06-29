@@ -5,6 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.sinks.RabbitMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.SolacePubSub;
 
 @Path("/connect")
@@ -35,6 +36,12 @@ public class TestService {
 		result += "Solace: " + Utils.isConnectedNullCheck(solace) + "\n";
 		
 		return result;
+	}
+
+	@GET
+	@Path("/rabbitmq")
+	public void connectToRabbitMQ(){
+		RabbitMQ rabbitMQ = new RabbitMQ(1);
 	}
 
 }
