@@ -6,8 +6,24 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sources.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.RabbitMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.SolacePubSub;
 
+
+// ActiveMQ Artemis imports
+
+import java.util.UUID;
+import javax.ws.rs.POST;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+import io.smallrye.mutiny.Multi;
+
+
 @Path("/test")
 public class TestService {
+
+
+    @Channel("new-artemis-message") Emitter<String> messageEmitter; // <1>
+
 
 	@GET
     @Path("/rabbitmq")
@@ -37,5 +53,14 @@ public class TestService {
     public void testIbmMQPut(){
         IbmMQ ibmMQ = new IbmMQ("PRODUCER_PUT");
         ibmMQ.send("Testing IBM Put", 1);
+    }
+
+    @POST
+    @Path("/artemis/generate")
+    @Produces(MediaType.TEXT_PLAIN)
+    public String createMessage() {
+        UUID uuid = UUID.randomUUID();
+        messageEmitter.send(uuid.toString()); // <2>
+        return uuid.toString();
     }
 }
