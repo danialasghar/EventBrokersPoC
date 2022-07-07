@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.sinks.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.RabbitMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.SolacePubSub;
 
@@ -42,10 +43,16 @@ public class TestService {
 	}
 
 	@GET
-	@Path("/rabbitmq")
+	@Path("/rabbit")
 	public void connectToRabbitMQ(){
 		RabbitMQ rabbitMQ = new RabbitMQ(1);
 		rabbitMQ.receiveMessage();
+	}
+
+	@GET
+	@Path("/ibm")
+	public void connectToIbmMQ(){
+		IbmMQ ibmMQ = new IbmMQ();
 	}
 
 }

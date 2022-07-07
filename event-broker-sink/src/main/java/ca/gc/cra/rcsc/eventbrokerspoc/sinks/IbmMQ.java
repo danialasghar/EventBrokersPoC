@@ -1,5 +1,4 @@
-package ca.gc.cra.rcsc.eventbrokerspoc.sources;
-
+package ca.gc.cra.rcsc.eventbrokerspoc.sinks;
 
 import javax.jms.Destination;
 import javax.jms.JMSConsumer;
@@ -12,26 +11,6 @@ import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 
-/**
- * A minimal and simple application for Point-to-point messaging.
- *
- * Application makes use of fixed literals, any customisations will require
- * re-compilation of this source file. Application assumes that the named queue
- * is empty prior to a run.
- *
- * Notes:
- *
- * API type: JMS API (v2.0, simplified domain)
- *
- * Messaging domain: Point-to-point
- *
- * Provider type: IBM MQ
- *
- * Connection mode: Client connection
- *
- * JNDI in use: No
- *
- */
 public class IbmMQ {
 
     // System exit status value (assume unset value to be 1)
@@ -83,12 +62,10 @@ public class IbmMQ {
             context = cf.createContext();
             destination = context.createQueue("queue:///" + QUEUE_NAME);
 
-            long uniqueNumber = System.currentTimeMillis() % 1000;
-            TextMessage message = context.createTextMessage("Your lucky number today is " + uniqueNumber);
+            consumer = context.createConsumer(destination); // autoclosable
+            String receivedMessage = consumer.receiveBody(String.class, 15000); // in ms or 15 seconds
 
-            producer = context.createProducer();
-            producer.send(destination, message);
-            System.out.println("Sent message:\n" + message);
+            System.out.println("\nReceived message:\n" + receivedMessage);
 
             context.close();
 
