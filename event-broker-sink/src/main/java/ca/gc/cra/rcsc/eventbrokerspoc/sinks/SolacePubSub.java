@@ -1,8 +1,6 @@
 package ca.gc.cra.rcsc.eventbrokerspoc.sinks;
 
 
-import javax.enterprise.context.ApplicationScoped;
-
 import com.solacesystems.jcsmp.BytesXMLMessage;
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPException;
@@ -14,7 +12,6 @@ import com.solacesystems.jcsmp.Topic;
 import com.solacesystems.jcsmp.XMLMessageConsumer;
 import com.solacesystems.jcsmp.XMLMessageListener;
 
-@ApplicationScoped
 public class SolacePubSub {
 
 	public static final String SOLACE_HOST = "pubsubplus-openshift-pubsubplus-openshift.solace-system.svc.cluster.local";
@@ -128,12 +125,12 @@ public class SolacePubSub {
 			    @Override
 			    public void onReceive(BytesXMLMessage msg) {
 			        if (msg instanceof TextMessage) {
-			            System.out.printf("TextMessage received: '%s'%n",
+			            System.out.printf("SOLACE-TextMessage received: '%s'%n",
 			                              ((TextMessage)msg).getText());
 			        } else {
-			            System.out.println("Message received.");
+			            System.out.println("SOLACE-Message received.");
 			        }
-			        System.out.printf("Message Dump:%n%s%n",msg.dump());
+			        //System.out.printf("SOLACE-Message Dump:%n%s%n",msg.dump());
 			    }
 
 			    @Override

@@ -7,28 +7,33 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.IbmMQ;
+import ca.gc.cra.rcsc.eventbrokerspoc.sinks.NatsBroker;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.RabbitMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.SolacePubSub;
 
 @Path("/connect")
 public class TestService {
 
-	@Inject
-	SolacePubSub solace;
+	private SolacePubSub solace;
+	private NatsBroker nats;
 	
-	/*
 	@GET
     @Path("/solace")
     public void connectToSolace() {
-		if (solace != null) {
-			solace.diconnectFromTopic();
+		if (solace == null) {
+			solace = new SolacePubSub();
+			solace.connectToTopic();
 		}
-		
-		//Create new instance and connect it
-		solace = new SolacePubSub();
-    	solace.connectToTopic();
     }
-	*/
+
+	@GET
+    @Path("/nats")
+    public void connectToNats() {
+		if (nats == null) {
+			nats = new NatsBroker();
+			nats.connectToSubject();
+		}
+    }
 	
 	@GET
 	@Path("/status")
@@ -36,8 +41,8 @@ public class TestService {
 	public String getStatus() {
 		String result = "Status:\n";
 		
-		//Solace
 		result += "Solace: " + Utils.isConnectedNullCheck(solace) + "\n";
+		result += "NATS: " + Utils.isConnectedNullCheck(nats) + "\n";
 		
 		return result;
 	}
