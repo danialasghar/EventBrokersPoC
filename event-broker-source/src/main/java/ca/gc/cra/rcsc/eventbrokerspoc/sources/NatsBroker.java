@@ -25,7 +25,7 @@ public class NatsBroker {
 
 	public void sendMessage() {
 		if (connection == null) {
-			System.out.println("ERROR: No connection to sendMessage");
+			System.out.println("NATS-ERROR: No connection to sendMessage");
 			return;
 		}
 
@@ -33,7 +33,7 @@ public class NatsBroker {
 
 		connection.publish(NATS_SUBJECT, message.getBytes(StandardCharsets.UTF_8));
 
-		System.out.println("MESSAGE SENT: " + message);
+		System.out.println("NATS-MESSAGE SENT: " + message);
 	}
 
 	private void connect() {

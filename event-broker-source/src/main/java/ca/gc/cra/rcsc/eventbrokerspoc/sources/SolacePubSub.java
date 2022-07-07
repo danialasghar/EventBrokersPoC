@@ -36,7 +36,7 @@ public class SolacePubSub {
 	
 	public void sendMessage() {
 		if (producer == null) {
-			System.out.println("ERROR: No producer to sendMessage");
+			System.out.println("SOLACE-ERROR: No producer to sendMessage");
 			return;
 		}
 		
@@ -50,7 +50,7 @@ public class SolacePubSub {
 		try {
 			producer.send(msg, topic);
 
-			System.out.println("MESSAGE SENT: " + messageText);
+			System.out.println("SOLACE-MESSAGE SENT: " + messageText);
 		} catch (JCSMPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -98,7 +98,7 @@ public class SolacePubSub {
 	
 	private void buildProducer() {
 		if (session == null) {
-			System.out.println("ERROR: No session to buildProducer");
+			System.out.println("SOLACE-ERROR: No session to buildProducer");
 			return;
 		}
 		
@@ -107,12 +107,12 @@ public class SolacePubSub {
 
 				@Override
 				public void responseReceivedEx(Object key) {
-					System.out.println("Producer received response for msg: " + key);
+					System.out.println("SOLACE: Producer received response for msg: " + key);
 				}
 
 				@Override
 				public void handleErrorEx(Object key, JCSMPException e, long timestamp) {
-					System.out.printf("Producer received error for msg: %s@%s - %s%n", key, timestamp, e);
+					System.out.printf("SOLACE: Producer received error for msg: %s@%s - %s%n", key, timestamp, e);
 				}
 			});
 		} catch (JCSMPException e) {
