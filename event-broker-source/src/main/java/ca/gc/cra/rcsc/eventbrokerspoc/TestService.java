@@ -56,18 +56,11 @@ public class TestService {
     }
 
     @GET
-    @Path("/IBM/pub")
+    @Path("/ibm")
     public void testIbmMQPub(){
-        IbmMQ ibmMQ = new IbmMQ("PRODUCER_PUB");
-        ibmMQ.send("Testing IBM Publish", 1);
+        IbmMQ ibmMQ = new IbmMQ();
     }
 
-    @GET
-    @Path("/IBM/put")
-    public void testIbmMQPut(){
-        IbmMQ ibmMQ = new IbmMQ("PRODUCER_PUT");
-        ibmMQ.send("Testing IBM Put", 1);
-    }
 
     @POST
     @Path("/artemis/generate")
