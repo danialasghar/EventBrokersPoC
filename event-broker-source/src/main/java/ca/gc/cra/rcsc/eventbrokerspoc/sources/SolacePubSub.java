@@ -46,11 +46,11 @@ public class SolacePubSub {
 		String messageText = Utils.buildMessage(instanceID);
 		
 		msg.setText(messageText);
-		
-		System.out.println("MESSAGE SENT: " + messageText);
-		
+				
 		try {
 			producer.send(msg, topic);
+
+			System.out.println("MESSAGE SENT: " + messageText);
 		} catch (JCSMPException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
