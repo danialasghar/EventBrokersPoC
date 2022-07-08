@@ -3,6 +3,7 @@ package ca.gc.cra.rcsc.eventbrokerspoc.sinks;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 import io.nats.client.Connection;
 import io.nats.client.Dispatcher;
 import io.nats.client.Message;
@@ -11,14 +12,13 @@ import io.nats.client.Nats;
 
 public class NatsBroker {
     
-    public static final String NATS_HOST = "nats://my-nats.nats-system.svc.cluster.local:4222";
-
-	public static final String NATS_SUBJECT = "test/subject";
+    private String natsHost;
+	private String natsSubject;
 
 	private Connection connection;
 
     public NatsBroker() {
-
+        loadConfiguration();
         connect();
     }
 
@@ -39,24 +39,35 @@ public class NatsBroker {
             
         });
 
-        dispatcher.subscribe(NATS_SUBJECT);
+        dispatcher.subscribe(natsSubject);
     }
 
     private void connect() {
 		try {
-			connection = Nats.connect(NATS_HOST);
+			connection = Nats.connect(natsHost);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			connection = null;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			connection = null;
 		}
 
+	}
+
+    private void loadConfiguration() {
+		natsHost = Utils.getStringProperty("nats.host");
+		natsSubject = Utils.getStringProperty("nats.subject");
+
+		printConfiguration();
+	}
+
+	private void printConfiguration() {
+		System.out.println("NATS Config");
+		System.out.println("natsHost=" + natsHost);
+		System.out.println("natsSubject=" + natsSubject);
 	}
 }

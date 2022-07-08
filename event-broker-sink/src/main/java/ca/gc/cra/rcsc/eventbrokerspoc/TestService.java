@@ -1,6 +1,5 @@
 package ca.gc.cra.rcsc.eventbrokerspoc;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -50,14 +49,14 @@ public class TestService {
 	@GET
 	@Path("/rabbit")
 	public void connectToRabbitMQ(){
-		RabbitMQ rabbitMQ = new RabbitMQ(1);
+		RabbitMQ rabbitMQ = new RabbitMQ();
 		rabbitMQ.receiveMessage();
 	}
 
 	@GET
 	@Path("/ibm")
 	public void connectToIbmMQ(){
-		IbmMQ ibmMQ = new IbmMQ();
+		new IbmMQ();
 	}
 
 }

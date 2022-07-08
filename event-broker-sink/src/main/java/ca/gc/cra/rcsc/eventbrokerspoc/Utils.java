@@ -1,5 +1,9 @@
 package ca.gc.cra.rcsc.eventbrokerspoc;
 
+import java.util.Optional;
+
+import org.eclipse.microprofile.config.ConfigProvider;
+
 public class Utils {
 	
 	public static final String CONNECTED_STRING = "connected";
@@ -15,5 +19,11 @@ public class Utils {
 		}
 		
 		return result;
+	}
+
+	public static String getStringProperty(String propertyName) {
+		Optional<String> optional = ConfigProvider.getConfig().getOptionalValue(propertyName, String.class);
+
+		return optional.isPresent() ? optional.get() : "";
 	}
 }
