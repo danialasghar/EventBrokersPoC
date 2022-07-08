@@ -17,19 +17,19 @@ import com.solacesystems.jcsmp.XMLMessageProducer;
 public class SolacePubSub {
 
 	@ConfigProperty(name = "solace.host")
-	private static String SOLACE_HOST;
+	String solaceHost;
 
 	@ConfigProperty(name = "solace.username")
-	public static String SOLACE_USERNAME;
+	String solaceUserName;
 
 	@ConfigProperty(name = "solace.password")
-	public static String SOLACE_PASSWORD;
+	String solacePassword;
 
 	@ConfigProperty(name = "solace.vpn")
-	public static String SOLACE_VPN_NAME;
+	String solaceVpnName;
 	
 	@ConfigProperty(name = "solace.topic.name")
-	public static String SOLACE_TOPIC_NAME;
+	String solaceTopicName;
 	
 	private int instanceID;
 	
@@ -51,7 +51,7 @@ public class SolacePubSub {
 			return;
 		}
 		
-		Topic topic = JCSMPFactory.onlyInstance().createTopic(SOLACE_TOPIC_NAME);
+		Topic topic = JCSMPFactory.onlyInstance().createTopic(solaceTopicName);
 		TextMessage msg = JCSMPFactory.onlyInstance().createMessage(TextMessage.class);
 
 		String messageText = Utils.buildMessage(instanceID);
@@ -70,22 +70,25 @@ public class SolacePubSub {
 	}
 	
 	private void connect() {
+
+		printConfiguration();
+
 		JCSMPProperties properties = new JCSMPProperties();
 		
-		if (SOLACE_HOST != null && !SOLACE_HOST.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.HOST,SOLACE_HOST);
+		if (solaceHost != null && !solaceHost.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.HOST, solaceHost);
 		}
 
-		if (SOLACE_USERNAME != null && !SOLACE_USERNAME.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.USERNAME, SOLACE_USERNAME);
+		if (solaceUserName != null && !solaceUserName.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.USERNAME, solaceUserName);
 		}
 		
-		if (SOLACE_PASSWORD != null && !SOLACE_PASSWORD.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.PASSWORD, SOLACE_PASSWORD);
+		if (solacePassword != null && !solacePassword.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.PASSWORD, solacePassword);
 		}
 		
-		if (SOLACE_VPN_NAME != null && !SOLACE_VPN_NAME.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.VPN_NAME, SOLACE_VPN_NAME);
+		if (solaceVpnName != null && !solaceVpnName.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.VPN_NAME, solaceVpnName);
 		}
 		
 		try {
@@ -133,6 +136,15 @@ public class SolacePubSub {
 			producer = null;
 		}
 
+	}
+
+	private void printConfiguration() {
+		System.out.println("Solace Config");
+		System.out.println("solaceHost=" + solaceHost);
+		System.out.println("solaceUserName=" + solaceUserName);
+		System.out.println("solacePassword=" + solacePassword);
+		System.out.println("solaceVpnName=" + solaceVpnName);
+		System.out.println("solaceTopicName=" + solaceTopicName);
 	}
 	
 }
