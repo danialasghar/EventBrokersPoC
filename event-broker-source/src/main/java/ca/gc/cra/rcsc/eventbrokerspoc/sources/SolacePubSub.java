@@ -1,5 +1,8 @@
 package ca.gc.cra.rcsc.eventbrokerspoc.sources;
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPException;
 import com.solacesystems.jcsmp.JCSMPFactory;
@@ -13,12 +16,20 @@ import com.solacesystems.jcsmp.XMLMessageProducer;
 
 public class SolacePubSub {
 
-	public static final String SOLACE_HOST = "pubsubplus-openshift-pubsubplus-openshift.solace-system.svc.cluster.local";
-	public static final String SOLACE_USERNAME = "test";
-	public static final String SOLACE_PASSWORD = "";
-	public static final String SOLACE_VPN_NAME = "";
+	@ConfigProperty(name = "solace.host")
+	private static String SOLACE_HOST;
+
+	@ConfigProperty(name = "solace.username")
+	public static String SOLACE_USERNAME;
+
+	@ConfigProperty(name = "solace.password")
+	public static String SOLACE_PASSWORD;
+
+	@ConfigProperty(name = "solace.vpn")
+	public static String SOLACE_VPN_NAME;
 	
-	public static final String SOLACE_TOPIC_NAME = "test/topic";
+	@ConfigProperty(name = "solace.topic.name")
+	public static String SOLACE_TOPIC_NAME;
 	
 	private int instanceID;
 	
