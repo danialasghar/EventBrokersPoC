@@ -2,24 +2,26 @@ package ca.gc.cra.rcsc.eventbrokerspoc.sources;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
+
+import org.eclipse.microprofile.config.ConfigProvider;
 
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 import io.nats.client.Connection;
 import io.nats.client.Nats;
 
 public class NatsBroker {
-
-	public static final String NATS_HOST = "nats://my-nats.nats-system.svc.cluster.local:4222";
-
-	public static final String NATS_SUBJECT = "test/subject";
-
 	private int instanceId;
+
+	private String natsHost;
+	private String natsSubject;
 
 	private Connection connection;
 
 	public NatsBroker(int instanceId) {
 		this.instanceId = instanceId;
 
+		loadConfiguration();
 		connect();
 	}
 
@@ -31,14 +33,14 @@ public class NatsBroker {
 
 		String message = Utils.buildMessage(instanceId);
 
-		connection.publish(NATS_SUBJECT, message.getBytes(StandardCharsets.UTF_8));
+		connection.publish(natsSubject, message.getBytes(StandardCharsets.UTF_8));
 
 		System.out.println("NATS-MESSAGE SENT: " + message);
 	}
 
 	private void connect() {
 		try {
-			connection = Nats.connect(NATS_HOST);
+			connection = Nats.connect(natsHost);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -52,5 +54,21 @@ public class NatsBroker {
 			connection = null;
 		}
 
+	}
+
+	private void loadConfiguration() {
+		Optional<String> host = ConfigProvider.getConfig().getOptionalValue("nats.host", String.class);
+		Optional<String> subject = ConfigProvider.getConfig().getOptionalValue("nats.subject", String.class);
+
+		natsHost = host.isPresent() ? host.get() : "";
+		natsSubject = subject.isPresent() ? subject.get() : "";
+
+		printConfiguration();
+	}
+
+	private void printConfiguration() {
+		System.out.println("NATS Config");
+		System.out.println("natsHost=" + natsHost);
+		System.out.println("natsSubject=" + natsSubject);
 	}
 }

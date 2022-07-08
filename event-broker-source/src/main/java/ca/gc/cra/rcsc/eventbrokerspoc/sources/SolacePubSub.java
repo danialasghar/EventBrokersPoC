@@ -1,7 +1,9 @@
 package ca.gc.cra.rcsc.eventbrokerspoc.sources;
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
+import java.util.Optional;
+
+import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPException;
@@ -15,23 +17,13 @@ import com.solacesystems.jcsmp.XMLMessageProducer;
 
 
 public class SolacePubSub {
-
-	@ConfigProperty(name = "solace.host")
-	String solaceHost;
-
-	@ConfigProperty(name = "solace.username")
-	String solaceUserName;
-
-	@ConfigProperty(name = "solace.password")
-	String solacePassword;
-
-	@ConfigProperty(name = "solace.vpn")
-	String solaceVpnName;
-	
-	@ConfigProperty(name = "solace.topic.name")
-	String solaceTopicName;
-	
 	private int instanceID;
+
+	private String solaceHost = "";
+	private String solaceUserName = "";
+	private String solacePassword = "";
+	private String solaceVpnName = "";
+	private String solaceTopicName = "";
 	
 	private JCSMPSession session;
 	private XMLMessageProducer producer;
@@ -39,9 +31,9 @@ public class SolacePubSub {
 	
 	public SolacePubSub(int instanceID) {
 		this.instanceID = instanceID;
-		
+
+		loadConfiguration();
 		connect();
-		
 		buildProducer();
 	}
 	
@@ -70,9 +62,6 @@ public class SolacePubSub {
 	}
 	
 	private void connect() {
-
-		printConfiguration();
-
 		JCSMPProperties properties = new JCSMPProperties();
 		
 		if (solaceHost != null && !solaceHost.trim().isEmpty()) {
@@ -136,6 +125,22 @@ public class SolacePubSub {
 			producer = null;
 		}
 
+	}
+
+	private void loadConfiguration() {
+		Optional<String> host = ConfigProvider.getConfig().getOptionalValue("solace.host", String.class);
+		Optional<String> username = ConfigProvider.getConfig().getOptionalValue("solace.username", String.class);
+		Optional<String> password = ConfigProvider.getConfig().getOptionalValue("solace.password", String.class);
+		Optional<String> vpn = ConfigProvider.getConfig().getOptionalValue("solace.vpn", String.class);
+		Optional<String> topic = ConfigProvider.getConfig().getOptionalValue("solace.topic.name", String.class);
+
+		solaceHost = host.isPresent() ? host.get() : "";
+		solaceUserName = username.isPresent() ? username.get() : "";
+		solacePassword = password.isPresent() ? password.get() : "";
+		solaceVpnName = vpn.isPresent() ? vpn.get() : "";
+		solaceTopicName = topic.isPresent() ? topic.get() : "";
+
+		printConfiguration();
 	}
 
 	private void printConfiguration() {
