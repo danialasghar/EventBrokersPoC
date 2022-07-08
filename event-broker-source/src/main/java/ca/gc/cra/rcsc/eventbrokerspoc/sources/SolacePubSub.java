@@ -128,17 +128,11 @@ public class SolacePubSub {
 	}
 
 	private void loadConfiguration() {
-		Optional<String> host = ConfigProvider.getConfig().getOptionalValue("solace.host", String.class);
-		Optional<String> username = ConfigProvider.getConfig().getOptionalValue("solace.username", String.class);
-		Optional<String> password = ConfigProvider.getConfig().getOptionalValue("solace.password", String.class);
-		Optional<String> vpn = ConfigProvider.getConfig().getOptionalValue("solace.vpn", String.class);
-		Optional<String> topic = ConfigProvider.getConfig().getOptionalValue("solace.topic.name", String.class);
-
-		solaceHost = host.isPresent() ? host.get() : "";
-		solaceUserName = username.isPresent() ? username.get() : "";
-		solacePassword = password.isPresent() ? password.get() : "";
-		solaceVpnName = vpn.isPresent() ? vpn.get() : "";
-		solaceTopicName = topic.isPresent() ? topic.get() : "";
+		solaceHost = Utils.getStringProperty("solace.host");
+		solaceUserName = Utils.getStringProperty("solace.username");
+		solacePassword = Utils.getStringProperty("solace.password");
+		solaceVpnName = Utils.getStringProperty("solace.vpn");
+		solaceTopicName = Utils.getStringProperty("solace.topic.name");
 
 		printConfiguration();
 	}

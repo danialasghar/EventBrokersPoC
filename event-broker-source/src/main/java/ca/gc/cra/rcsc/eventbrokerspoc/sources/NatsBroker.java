@@ -57,11 +57,8 @@ public class NatsBroker {
 	}
 
 	private void loadConfiguration() {
-		Optional<String> host = ConfigProvider.getConfig().getOptionalValue("nats.host", String.class);
-		Optional<String> subject = ConfigProvider.getConfig().getOptionalValue("nats.subject", String.class);
-
-		natsHost = host.isPresent() ? host.get() : "";
-		natsSubject = subject.isPresent() ? subject.get() : "";
+		natsHost = Utils.getStringProperty("nats.host");
+		natsSubject = Utils.getStringProperty("nats.subject");
 
 		printConfiguration();
 	}
