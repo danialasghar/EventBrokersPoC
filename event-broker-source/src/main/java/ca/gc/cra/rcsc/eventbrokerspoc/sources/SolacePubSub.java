@@ -1,9 +1,6 @@
 package ca.gc.cra.rcsc.eventbrokerspoc.sources;
+
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
-
-import java.util.Optional;
-
-import org.eclipse.microprofile.config.ConfigProvider;
 
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPException;
@@ -55,7 +52,6 @@ public class SolacePubSub {
 
 			System.out.println("SOLACE-MESSAGE SENT: " + messageText);
 		} catch (JCSMPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -86,12 +82,10 @@ public class SolacePubSub {
 			session.connect();
 			
 		} catch (InvalidPropertiesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 			session = null;
 		} catch (JCSMPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 			session = null;
@@ -119,7 +113,6 @@ public class SolacePubSub {
 				}
 			});
 		} catch (JCSMPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			producer = null;

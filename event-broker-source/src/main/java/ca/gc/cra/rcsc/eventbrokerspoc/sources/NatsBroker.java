@@ -2,10 +2,6 @@ package ca.gc.cra.rcsc.eventbrokerspoc.sources;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Optional;
-
-import org.eclipse.microprofile.config.ConfigProvider;
-
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 import io.nats.client.Connection;
 import io.nats.client.Nats;
@@ -43,12 +39,10 @@ public class NatsBroker {
 			connection = Nats.connect(natsHost);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			connection = null;
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			connection = null;

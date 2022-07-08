@@ -15,7 +15,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 
@@ -60,7 +59,7 @@ public class TestService {
     @GET
     @Path("/ibm")
     public void testIbmMQPub(){
-        IbmMQ ibmMQ = new IbmMQ();
+        new IbmMQ();
     }
 
 
