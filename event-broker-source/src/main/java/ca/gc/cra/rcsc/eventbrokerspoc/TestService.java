@@ -9,17 +9,6 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sources.RabbitMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.SolacePubSub;
 
 
-// ActiveMQ Artemis imports
-
-import java.util.UUID;
-import javax.ws.rs.POST;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
-
-
 @Path("/test")
 public class TestService {
 
@@ -63,7 +52,7 @@ public class TestService {
     }
 
 
-    @Get
+    @GET
     @Path("/artemis")
     public void createMessage() {
         if (null == activeMQ) {
