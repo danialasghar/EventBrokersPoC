@@ -59,7 +59,8 @@ public class TestService {
     @GET
     @Path("/ibm")
     public void testIbmMQPub(){
-        new IbmMQ();
+        IbmMQ ibmmq = new IbmMQ();
+        ibmmq.connectSend();
     }
 
 
