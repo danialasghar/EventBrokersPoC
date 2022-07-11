@@ -11,26 +11,7 @@ import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 
-/**
- * A minimal and simple application for Point-to-point messaging.
- *
- * Application makes use of fixed literals, any customisations will require
- * re-compilation of this source file. Application assumes that the named queue
- * is empty prior to a run.
- *
- * Notes:
- *
- * API type: JMS API (v2.0, simplified domain)
- *
- * Messaging domain: Point-to-point
- *
- * Provider type: IBM MQ
- *
- * Connection mode: Client connection
- *
- * JNDI in use: No
- *
- */
+
 public class IbmMQ {
 
     // System exit status value (assume unset value to be 1)
