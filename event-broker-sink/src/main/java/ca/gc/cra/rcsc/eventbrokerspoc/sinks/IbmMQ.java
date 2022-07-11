@@ -4,8 +4,6 @@ import javax.jms.Destination;
 import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
-import javax.jms.JMSProducer;
-import javax.jms.TextMessage;
 
 import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.jms.JmsFactoryFactory;
@@ -36,7 +34,6 @@ public class IbmMQ {
         // Variables
         JMSContext context = null;
         Destination destination = null;
-        JMSProducer producer = null;
         JMSConsumer consumer = null;
 
 

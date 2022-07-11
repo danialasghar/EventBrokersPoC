@@ -1,5 +1,8 @@
 package ca.gc.cra.rcsc.eventbrokerspoc;
 import java.text.SimpleDateFormat;
+import java.util.Optional;
+
+import org.eclipse.microprofile.config.ConfigProvider;
 
 public class Utils {
 
@@ -12,4 +15,9 @@ public class Utils {
 		return "Instance Number: " + Integer.toString(instanceID) + " , Sent at: " + timeStamp;
 	}
 	
+	public static String getStringProperty(String propertyName) {
+		Optional<String> optional = ConfigProvider.getConfig().getOptionalValue(propertyName, String.class);
+
+		return optional.isPresent() ? optional.get() : "";
+	}
 }

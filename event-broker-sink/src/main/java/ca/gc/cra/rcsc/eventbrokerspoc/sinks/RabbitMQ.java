@@ -15,10 +15,8 @@ public class RabbitMQ {
     private final static String QUEUE_NAME = "POC";
     ConnectionFactory factory;
     Connection connection;
-    private int instanceID;
 
-    public RabbitMQ(int instanceID){
-        this.instanceID = instanceID;
+    public RabbitMQ(){
         this.factory = new ConnectionFactory();
         this.factory.setHost("rabbitmq-demo-clusterip.rabbitmq-system.svc");
         this.factory.setPort(5672);

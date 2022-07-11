@@ -1,5 +1,7 @@
 package ca.gc.cra.rcsc.eventbrokerspoc.sources;
+
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
+
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPException;
 import com.solacesystems.jcsmp.JCSMPFactory;
@@ -12,15 +14,13 @@ import com.solacesystems.jcsmp.XMLMessageProducer;
 
 
 public class SolacePubSub {
-
-	public static final String SOLACE_HOST = "pubsubplus-openshift-pubsubplus-openshift.solace-system.svc.cluster.local";
-	public static final String SOLACE_USERNAME = "test";
-	public static final String SOLACE_PASSWORD = "";
-	public static final String SOLACE_VPN_NAME = "";
-	
-	public static final String SOLACE_TOPIC_NAME = "test/topic";
-	
 	private int instanceID;
+
+	private String solaceHost = "";
+	private String solaceUserName = "";
+	private String solacePassword = "";
+	private String solaceVpnName = "";
+	private String solaceTopicName = "";
 	
 	private JCSMPSession session;
 	private XMLMessageProducer producer;
@@ -28,31 +28,30 @@ public class SolacePubSub {
 	
 	public SolacePubSub(int instanceID) {
 		this.instanceID = instanceID;
-		
+
+		loadConfiguration();
 		connect();
-		
 		buildProducer();
 	}
 	
 	public void sendMessage() {
 		if (producer == null) {
-			System.out.println("ERROR: No producer to sendMessage");
+			System.out.println("SOLACE-ERROR: No producer to sendMessage");
 			return;
 		}
 		
-		Topic topic = JCSMPFactory.onlyInstance().createTopic(SOLACE_TOPIC_NAME);
+		Topic topic = JCSMPFactory.onlyInstance().createTopic(solaceTopicName);
 		TextMessage msg = JCSMPFactory.onlyInstance().createMessage(TextMessage.class);
 
 		String messageText = Utils.buildMessage(instanceID);
 		
 		msg.setText(messageText);
-		
-		System.out.println("MESSAGE SENT: " + messageText);
-		
+				
 		try {
 			producer.send(msg, topic);
+
+			System.out.println("SOLACE-MESSAGE SENT: " + messageText);
 		} catch (JCSMPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -61,20 +60,20 @@ public class SolacePubSub {
 	private void connect() {
 		JCSMPProperties properties = new JCSMPProperties();
 		
-		if (SOLACE_HOST != null && !SOLACE_HOST.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.HOST,SOLACE_HOST);
+		if (solaceHost != null && !solaceHost.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.HOST, solaceHost);
 		}
 
-		if (SOLACE_USERNAME != null && !SOLACE_USERNAME.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.USERNAME, SOLACE_USERNAME);
+		if (solaceUserName != null && !solaceUserName.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.USERNAME, solaceUserName);
 		}
 		
-		if (SOLACE_PASSWORD != null && !SOLACE_PASSWORD.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.PASSWORD, SOLACE_PASSWORD);
+		if (solacePassword != null && !solacePassword.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.PASSWORD, solacePassword);
 		}
 		
-		if (SOLACE_VPN_NAME != null && !SOLACE_VPN_NAME.trim().isEmpty()) {
-			properties.setProperty(JCSMPProperties.VPN_NAME, SOLACE_VPN_NAME);
+		if (solaceVpnName != null && !solaceVpnName.trim().isEmpty()) {
+			properties.setProperty(JCSMPProperties.VPN_NAME, solaceVpnName);
 		}
 		
 		try {
@@ -83,12 +82,10 @@ public class SolacePubSub {
 			session.connect();
 			
 		} catch (InvalidPropertiesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 			session = null;
 		} catch (JCSMPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			
 			session = null;
@@ -98,7 +95,7 @@ public class SolacePubSub {
 	
 	private void buildProducer() {
 		if (session == null) {
-			System.out.println("ERROR: No session to buildProducer");
+			System.out.println("SOLACE-ERROR: No session to buildProducer");
 			return;
 		}
 		
@@ -107,21 +104,39 @@ public class SolacePubSub {
 
 				@Override
 				public void responseReceivedEx(Object key) {
-					System.out.println("Producer received response for msg: " + key);
+					System.out.println("SOLACE: Producer received response for msg: " + key);
 				}
 
 				@Override
 				public void handleErrorEx(Object key, JCSMPException e, long timestamp) {
-					System.out.printf("Producer received error for msg: %s@%s - %s%n", key, timestamp, e);
+					System.out.printf("SOLACE: Producer received error for msg: %s@%s - %s%n", key, timestamp, e);
 				}
 			});
 		} catch (JCSMPException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			producer = null;
 		}
 
+	}
+
+	private void loadConfiguration() {
+		solaceHost = Utils.getStringProperty("solace.host");
+		solaceUserName = Utils.getStringProperty("solace.username");
+		solacePassword = Utils.getStringProperty("solace.password");
+		solaceVpnName = Utils.getStringProperty("solace.vpn");
+		solaceTopicName = Utils.getStringProperty("solace.topic.name");
+
+		printConfiguration();
+	}
+
+	private void printConfiguration() {
+		System.out.println("Solace Config");
+		System.out.println("solaceHost=" + solaceHost);
+		System.out.println("solaceUserName=" + solaceUserName);
+		System.out.println("solacePassword=" + solacePassword);
+		System.out.println("solaceVpnName=" + solaceVpnName);
+		System.out.println("solaceTopicName=" + solaceTopicName);
 	}
 	
 }

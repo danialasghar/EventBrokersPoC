@@ -8,7 +8,6 @@ import com.rabbitmq.client.Channel;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeoutException;
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 

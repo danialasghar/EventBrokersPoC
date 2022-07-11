@@ -2,7 +2,6 @@ package ca.gc.cra.rcsc.eventbrokerspoc.sources;
 
 
 import javax.jms.Destination;
-import javax.jms.JMSConsumer;
 import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.JMSProducer;
@@ -58,7 +57,6 @@ public class IbmMQ {
         JMSContext context = null;
         Destination destination = null;
         JMSProducer producer = null;
-        JMSConsumer consumer = null;
 
 
 
