@@ -37,7 +37,7 @@ public class IbmMQ {
     private static int status = 1;
 
     // Create variables for the connection to MQ
-    private static final String HOST = "localhost"; // Host name or IP address
+    private static final String HOST = "quickstart-cp4i-ibm-mq.ibmmq.svc"; // Host name or IP address
     private static final int PORT = 1414; // Listener port for your queue manager
     private static final String CHANNEL = "DEV.APP.SVRCONN"; // Channel name
     private static final String QMGR = "QM1"; // Queue manager name
