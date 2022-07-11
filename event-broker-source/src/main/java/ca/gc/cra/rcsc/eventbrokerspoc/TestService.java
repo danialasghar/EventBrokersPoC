@@ -2,6 +2,7 @@ package ca.gc.cra.rcsc.eventbrokerspoc;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.sources.ActiveMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.NatsBroker;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.RabbitMQ;
@@ -22,11 +23,9 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;
 @Path("/test")
 public class TestService {
 
-
-    @Channel("new-artemis") Emitter<String> messageEmitter; // <1>
-
     private SolacePubSub solace;
     private NatsBroker nats;
+    private ActiveMQ activeMQ;
 
 	@GET
     @Path("/rabbitmq")
@@ -39,7 +38,7 @@ public class TestService {
 	@GET
     @Path("/solace")
     public void testSolace() {
-        if (solace == null) {
+        if (null == solace) {
             solace = new SolacePubSub(2);
         }
 
@@ -49,7 +48,7 @@ public class TestService {
     @GET
     @Path("/nats")
     public void testNats() {
-        if (nats == null) {
+        if (null == nats) {
             nats = new NatsBroker(3);
         }
 
@@ -64,12 +63,13 @@ public class TestService {
     }
 
 
-    @POST
-    @Path("/artemis/generate")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String createMessage(String newMessage) {
-        UUID uuid = UUID.randomUUID();
-        messageEmitter.send(newMessage + uuid.toString()); // <2>
-        return uuid.toString();
+    @Get
+    @Path("/artemis")
+    public void createMessage() {
+        if (null == activeMQ) {
+            activeMQ = new ActiveMQ(4);
+        }
+
+        activeMQ.sendMessage();
     }
 }
