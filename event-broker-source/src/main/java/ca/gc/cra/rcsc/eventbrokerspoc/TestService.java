@@ -15,8 +15,11 @@ public class TestService {
 
     private SolacePubSub solace;
     private NatsBroker nats;
+<<<<<<< HEAD
     
     @Inject
+=======
+>>>>>>> 9a822e2 (Created ActiveMQ)
     private ActiveMQ activeMQ;
 
 	@GET
@@ -53,7 +56,6 @@ public class TestService {
         IbmMQ ibmmq = new IbmMQ();
         ibmmq.connectSend();
     }
-
 
     @GET
     @Path("/artemis")
