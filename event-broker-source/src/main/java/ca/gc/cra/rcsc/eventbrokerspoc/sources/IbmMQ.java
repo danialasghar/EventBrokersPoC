@@ -62,6 +62,7 @@ public class IbmMQ {
 
         try {
             // Create a connection factory
+            System.out.println("TRYING CONNECTION");
             JmsFactoryFactory ff = JmsFactoryFactory.getInstance(WMQConstants.WMQ_PROVIDER);
             JmsConnectionFactory cf = ff.createConnectionFactory();
 
@@ -77,6 +78,7 @@ public class IbmMQ {
             cf.setStringProperty(WMQConstants.PASSWORD, APP_PASSWORD);
             //cf.setStringProperty(WMQConstants.WMQ_SSL_CIPHER_SUITE, "*TLS12");
 
+            System.out.println("AFTER CONNECTION");
             // Create JMS objects
             context = cf.createContext();
             destination = context.createQueue("queue:///" + QUEUE_NAME);
