@@ -1,4 +1,5 @@
 package ca.gc.cra.rcsc.eventbrokerspoc;
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
@@ -14,6 +15,8 @@ public class TestService {
 
     private SolacePubSub solace;
     private NatsBroker nats;
+    
+    @Inject
     private ActiveMQ activeMQ;
 
 	@GET
@@ -55,10 +58,6 @@ public class TestService {
     @GET
     @Path("/artemis")
     public void createMessage() {
-        if (null == activeMQ) {
-            activeMQ = new ActiveMQ(4);
-        }
-
         activeMQ.sendMessage();
     }
 }
