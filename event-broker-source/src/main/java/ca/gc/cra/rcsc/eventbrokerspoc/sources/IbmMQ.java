@@ -20,7 +20,7 @@ public class IbmMQ {
     // Create variables for the connection to MQ
     private static final String HOST = "guimq-ibm-mq.ibmmq.svc"; // Host name or IP address
     private static final int PORT = 1414; // Listener port for your queue manager
-    private static final String CHANNEL = "DEV.APP.SVRCONN"; // Channel name
+    private static final String CHANNEL = "APP"; // Channel name
     private static final String QMGR = "QM1"; // Queue manager name
     private static final String APP_USER = "admin"; // User name that application uses to connect to MQ
     private static final String APP_PASSWORD = "passw0rd"; // Password that the application uses to connect to MQ
