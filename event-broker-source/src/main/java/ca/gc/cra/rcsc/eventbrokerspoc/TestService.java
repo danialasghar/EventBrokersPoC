@@ -8,6 +8,8 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sources.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.NatsBroker;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.RabbitMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.SolacePubSub;
+import ca.gc.cra.rcsc.eventbrokerspoc.sources.ApacheKafka;
+
 
 
 @Path("/test")
@@ -67,6 +69,6 @@ public class TestService {
      @GET
     @Path("/kafka")
     public void testKafka() {
-        kafka_source.sendMessage();
+        kakfa_source.sendMessage();
     }
 }
