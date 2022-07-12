@@ -19,6 +19,10 @@ public class TestService {
     @Inject
     private ActiveMQ activeMQ;
 
+    @Inject
+    private ApacheKafka kakfa_source;
+
+
 	@GET
     @Path("/rabbitmq")
     public void testRabbitMq() {
@@ -58,5 +62,11 @@ public class TestService {
     @Path("/artemis")
     public void createMessage() {
         activeMQ.sendMessage();
+    }
+
+     @GET
+    @Path("/kafka")
+    public void testKafka() {
+        kafka_source.sendMessage();
     }
 }
