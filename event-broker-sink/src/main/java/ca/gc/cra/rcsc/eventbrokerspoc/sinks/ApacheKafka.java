@@ -8,7 +8,7 @@ public class ApacheKafka {
 
 
     @Incoming("requests")
-    public String process(String message) throws InterruptedException {
+    public void process(String message) throws InterruptedException {
         System.out.println("Apache Kafka message received: " + message);
     }
 }
