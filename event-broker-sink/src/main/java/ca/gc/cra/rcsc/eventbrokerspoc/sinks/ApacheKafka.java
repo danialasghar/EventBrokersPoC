@@ -7,7 +7,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 public class ApacheKafka {
 
 
-    @Incoming("requests")
+    @Incoming("kafka-requests")
     public void process(String message) throws InterruptedException {
         System.out.println("Apache Kafka message received: " + message);
     }
