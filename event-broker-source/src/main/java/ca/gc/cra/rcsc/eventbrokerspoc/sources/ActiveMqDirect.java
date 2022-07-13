@@ -16,6 +16,8 @@ import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 public class ActiveMqDirect {
     private int instanceId;
 
+    private static final String HOST_PREFIX = "vm://";
+
     private String activeMqHost = "";
     private String activeMqTopicName = "";
 
@@ -52,7 +54,7 @@ public class ActiveMqDirect {
 
     private void connect() {
         // Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("vm://localhost");
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(HOST_PREFIX + activeMqHost);
 
         try {
             // Create a Connection
