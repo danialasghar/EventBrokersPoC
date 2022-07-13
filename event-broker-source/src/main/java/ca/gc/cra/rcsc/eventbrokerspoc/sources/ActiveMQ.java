@@ -7,8 +7,9 @@ import org.eclipse.microprofile.reactive.messaging.Emitter;
 
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 
-@ApplicationScoped
+//@ApplicationScoped
 public class ActiveMQ {
+    /*
     @Channel("new-artemis")
     Emitter<String> messageEmitter;
 
@@ -29,4 +30,5 @@ public class ActiveMQ {
 
         System.out.println("ActiveMQ-MESSAGE SENT: " + message);
     }
+    */
 }
