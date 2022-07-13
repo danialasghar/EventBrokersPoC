@@ -68,7 +68,7 @@ public class ActiveMqDirect {
             Destination destination = session.createQueue(activeMqTopicName);
 
             // Create a MessageProducer from the Session to the Topic or Queue
-            MessageProducer producer = session.createProducer(destination);
+            producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
         } catch (JMSException e) {
