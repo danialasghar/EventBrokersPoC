@@ -16,6 +16,9 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sources.ApacheKafka;
 @Path("/test")
 public class TestService {
 
+    @Inject
+    ActiveMQ activeMqBean;
+
     private SolacePubSub solace;
     private NatsBroker nats;
     private ActiveMqJms activeMq;
@@ -67,6 +70,12 @@ public class TestService {
         }
 
         activeMq.sendMessage();
+    }
+
+    @GET
+    @Path("/activemqbean")
+    public void testActiveMQBean() {
+        activeMqBean.sendMessage();
     }
 
      @GET
