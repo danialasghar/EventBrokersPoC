@@ -44,6 +44,15 @@ public class TestService {
 			activeMq.connectToTopic();
 		}
     }
+
+	@GET
+    @Path("/activemqreceive")
+    public void connectToActiveMq2() {
+		if (activeMq == null) {
+			activeMq = new ActiveMQJms();
+			activeMq.receiveMessage();;
+		}
+    }
 	
 	@GET
 	@Path("/status")

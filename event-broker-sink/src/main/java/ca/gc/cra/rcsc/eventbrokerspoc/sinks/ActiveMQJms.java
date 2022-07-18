@@ -45,6 +45,8 @@ public class ActiveMQJms {
 
                 @Override
                 public void onMessage(Message message) {
+                    System.out.println("ActiveMQ-Received 1: " + message);
+
                     if (message instanceof TextMessage) {
                         try {
                             TextMessage textMessage = (TextMessage) message;
@@ -60,14 +62,34 @@ public class ActiveMQJms {
                 }
                
             });
-
-            connection.start();
         } catch (JMSException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-    }        
+    }
+    
+    public void receiveMessage() {
+        try {
+            // Create the destination (Topic or Queue)
+            Destination destination = session.createQueue(activeMqTopicName);
+
+            // Create a MessageConsumer from the Session to the Topic or Queue
+            consumer = session.createConsumer(destination);
+
+            // Wait for a message
+            Message message = consumer.receive(1000);
+
+            System.out.println("ActiveMQ-Received 2: " + message);
+
+            if (message instanceof TextMessage) {
+                TextMessage textMessage = (TextMessage) message;
+                String text = textMessage.getText();
+                System.out.println("Received: " + text);
+            } else {
+                System.out.println("Received: " + message);
+            }
+    }
     
     private void connect() {
         // Create a ConnectionFactory
@@ -76,7 +98,7 @@ public class ActiveMQJms {
         try {
             // Create a Connection
             connection = connectionFactory.createConnection();
-            //connection.start();
+            connection.start();
 
             connection.setExceptionListener(new ExceptionListener() {
                 public synchronized void onException(JMSException ex) {
