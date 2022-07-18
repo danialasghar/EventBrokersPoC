@@ -20,6 +20,7 @@ public class ActiveMQJms {
 
     private Connection connection;
     private Session session;
+    private MessageConsumer consumer;
 
     public ActiveMQJms() {
 
@@ -37,7 +38,7 @@ public class ActiveMQJms {
             Destination destination = session.createQueue(activeMqTopicName);
 
             // Create a MessageConsumer from the Session to the Topic or Queue
-            MessageConsumer consumer = session.createConsumer(destination);
+            consumer = session.createConsumer(destination);
 
             // Set message listener
             consumer.setMessageListener(new MessageListener() {
