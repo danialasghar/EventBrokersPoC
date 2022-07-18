@@ -60,6 +60,8 @@ public class ActiveMQJms {
                 }
                
             });
+
+            connection.start();
         } catch (JMSException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -74,7 +76,7 @@ public class ActiveMQJms {
         try {
             // Create a Connection
             connection = connectionFactory.createConnection();
-            connection.start();
+            //connection.start();
 
             connection.setExceptionListener(new ExceptionListener() {
                 public synchronized void onException(JMSException ex) {
