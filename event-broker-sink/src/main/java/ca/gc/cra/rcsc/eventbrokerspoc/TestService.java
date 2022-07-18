@@ -5,6 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.sinks.ActiveMQJms;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.NatsBroker;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.RabbitMQ;
@@ -15,6 +16,7 @@ public class TestService {
 
 	private SolacePubSub solace;
 	private NatsBroker nats;
+	private ActiveMQJms activeMq;
 	
 	@GET
     @Path("/solace")
@@ -33,6 +35,15 @@ public class TestService {
 			nats.connectToSubject();
 		}
     }
+
+	@GET
+    @Path("/activemq")
+    public void connectToActiveMq() {
+		if (activeMq == null) {
+			activeMq = new ActiveMQJms();
+			activeMq.connectToTopic();
+		}
+    }
 	
 	@GET
 	@Path("/status")
@@ -42,6 +53,7 @@ public class TestService {
 		
 		result += "Solace: " + Utils.isConnectedNullCheck(solace) + "\n";
 		result += "NATS: " + Utils.isConnectedNullCheck(nats) + "\n";
+		result += "ActiveMQ: " + Utils.isConnectedNullCheck(activeMq) + "\n";
 		
 		return result;
 	}

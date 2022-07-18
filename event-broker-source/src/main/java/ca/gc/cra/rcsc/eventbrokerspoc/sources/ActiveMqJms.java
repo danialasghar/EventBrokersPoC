@@ -13,10 +13,8 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 
 import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 
-public class ActiveMqDirect {
+public class ActiveMqJms {
     private int instanceId;
-
-    private static final String HOST_PREFIX = "vm://";
 
     private String activeMqHost = "";
     private String activeMqTopicName = "";
@@ -25,7 +23,7 @@ public class ActiveMqDirect {
     private Session session;
     private MessageProducer producer;
 
-    public ActiveMqDirect(int instanceId) {
+    public ActiveMqJms(int instanceId) {
         this.instanceId = instanceId;
 
         loadConfiguration();
@@ -54,7 +52,7 @@ public class ActiveMqDirect {
 
     private void connect() {
         // Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(HOST_PREFIX + activeMqHost);
+        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(activeMqHost);
 
         try {
             // Create a Connection

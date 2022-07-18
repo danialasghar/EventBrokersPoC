@@ -4,7 +4,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.ActiveMQ;
-import ca.gc.cra.rcsc.eventbrokerspoc.sources.ActiveMqDirect;
+import ca.gc.cra.rcsc.eventbrokerspoc.sources.ActiveMqJms;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.NatsBroker;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.RabbitMQ;
@@ -18,7 +18,7 @@ public class TestService {
 
     private SolacePubSub solace;
     private NatsBroker nats;
-    private ActiveMqDirect activeMq;
+    private ActiveMqJms activeMq;
     
     @Inject
     private ApacheKafka kakfa_source;
@@ -61,9 +61,9 @@ public class TestService {
 
     @GET
     @Path("/activemq")
-    public void createMessage() {
+    public void testActiveMQ() {
         if (null == activeMq) {
-            activeMq = new ActiveMqDirect(4);
+            activeMq = new ActiveMqJms(4);
         }
 
         activeMq.sendMessage();
