@@ -89,6 +89,10 @@ public class ActiveMQJms {
             } else {
                 System.out.println("Received: " + message);
             }
+        } catch (JMSException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
     private void connect() {
