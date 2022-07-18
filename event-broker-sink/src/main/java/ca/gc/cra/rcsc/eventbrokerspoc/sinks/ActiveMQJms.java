@@ -78,7 +78,7 @@ public class ActiveMQJms {
             consumer = session.createConsumer(destination);
 
             // Wait for a message
-            Message message = consumer.receive(1000);
+            Message message = consumer.receive(1000000);
 
             System.out.println("ActiveMQ-Received 2: " + message);
 
