@@ -59,8 +59,6 @@ public class ActiveMQJms {
                         } else {
                             System.out.println("ActiveMQ-Received: " + message);
                         }
-
-                        session.commit();
                     } catch (JMSException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -69,7 +67,7 @@ public class ActiveMQJms {
                
             });
 
-            //connection.start();
+            connection.start();
 
         } catch (JMSException e) {
             // TODO Auto-generated catch block
@@ -111,7 +109,7 @@ public class ActiveMQJms {
         try {
             // Create a Connection
             connection = connectionFactory.createConnection();
-            connection.start();
+            //connection.start();
             
             connection.setExceptionListener(new ExceptionListener() {
                 public synchronized void onException(JMSException ex) {
@@ -120,7 +118,7 @@ public class ActiveMQJms {
             });
 
             // Create a Session
-            session = connection.createSession(true, Session.SESSION_TRANSACTED);
+            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         
         } catch (JMSException e) {
             // TODO Auto-generated catch block
