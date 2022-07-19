@@ -39,16 +39,16 @@ public class TestService {
 	@GET
     @Path("/activemq")
     public void connectToActiveMq() {
-		if (activeMq == null) {
+		//if (activeMq == null) {
 			activeMq = new ActiveMQJms();
-			//activeMq.connectToTopic();
-		}
+			activeMq.connectToTopic();
+		//}
     }
 
 	@GET
     @Path("/activemqreceive")
     public void connectToActiveMq2() {
-		connectToActiveMq();
+		activeMq = new ActiveMQJms();
 		activeMq.receiveMessage();;
     }
 	
