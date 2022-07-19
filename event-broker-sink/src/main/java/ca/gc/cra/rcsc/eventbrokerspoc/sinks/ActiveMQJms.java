@@ -21,6 +21,7 @@ public class ActiveMQJms {
     private Connection connection;
     private Session session;
     private MessageConsumer consumer;
+    private MessageConsumer consumer2;
 
     public ActiveMQJms() {
 
@@ -62,6 +63,9 @@ public class ActiveMQJms {
                 }
                
             });
+
+            connection.start();
+
         } catch (JMSException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -75,10 +79,10 @@ public class ActiveMQJms {
             Destination destination = session.createQueue(activeMqTopicName);
 
             // Create a MessageConsumer from the Session to the Topic or Queue
-            consumer = session.createConsumer(destination);
+            consumer2 = session.createConsumer(destination);
 
             // Wait for a message
-            Message message = consumer.receive(1000000);
+            Message message = consumer2.receive(1000);
 
             System.out.println("ActiveMQ-Received 2: " + message);
 
@@ -102,8 +106,8 @@ public class ActiveMQJms {
         try {
             // Create a Connection
             connection = connectionFactory.createConnection();
-            connection.start();
-
+            //connection.start();
+            
             connection.setExceptionListener(new ExceptionListener() {
                 public synchronized void onException(JMSException ex) {
                     System.out.println("ActiveMQ-ERROR: JMS Exception" + ex);
