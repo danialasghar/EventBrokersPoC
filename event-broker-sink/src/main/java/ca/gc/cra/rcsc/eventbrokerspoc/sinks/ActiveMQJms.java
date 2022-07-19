@@ -48,17 +48,22 @@ public class ActiveMQJms {
                 public void onMessage(Message message) {
                     System.out.println("ActiveMQ-Received 1: " + message);
 
-                    if (message instanceof TextMessage) {
-                        try {
+                    try {
+
+                        if (message instanceof TextMessage) {
                             TextMessage textMessage = (TextMessage) message;
                             String text = textMessage.getText();
                             System.out.println("ActiveMQ-Received: " + text);
-                        } catch (JMSException e) {
-                            // TODO Auto-generated catch block
-                            e.printStackTrace();
+
+                            session.commit();
+                        } else {
+                            System.out.println("ActiveMQ-Received: " + message);
                         }
-                    } else {
-                        System.out.println("ActiveMQ-Received: " + message);
+
+                        session.commit();
+                    } catch (JMSException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
                 }
                
@@ -115,7 +120,7 @@ public class ActiveMQJms {
             });
 
             // Create a Session
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session = connection.createSession(true, Session.SESSION_TRANSACTED);
         
         } catch (JMSException e) {
             // TODO Auto-generated catch block

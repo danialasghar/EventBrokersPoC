@@ -42,7 +42,6 @@ public class ActiveMqJms {
             
             // Tell the producer to send the message
             producer.send(message);
-            session.commit();
 
             System.out.println("ActiveMQ-MESSAGE SENT: " + messageText);
         } catch (JMSException e) {
