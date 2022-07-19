@@ -7,6 +7,7 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
+import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
@@ -35,11 +36,11 @@ public class ActiveMQJms {
 			return;
 		}
         try {
-            // Create the destination (Topic or Queue)
-            Destination destination = session.createQueue(activeMqTopicName);
+            // Create the Queue
+            Queue queue = session.createQueue(activeMqTopicName);
 
             // Create a MessageConsumer from the Session to the Topic or Queue
-            consumer = session.createConsumer(destination);
+            consumer = session.createConsumer(queue);
 
             // Set message listener
             consumer.setMessageListener(new MessageListener() {
@@ -54,8 +55,6 @@ public class ActiveMQJms {
                             TextMessage textMessage = (TextMessage) message;
                             String text = textMessage.getText();
                             System.out.println("ActiveMQ-Received: " + text);
-
-                            session.commit();
                         } else {
                             System.out.println("ActiveMQ-Received: " + message);
                         }
@@ -76,16 +75,17 @@ public class ActiveMQJms {
 
     }
     
+    /*
     public void receiveMessage() {
         try {
-            // Create the destination (Topic or Queue)
-            Destination destination = session.createQueue(activeMqTopicName);
+            // Create the Queue
+            Queue queue = session.createQueue(activeMqTopicName);
 
             // Create a MessageConsumer from the Session to the Topic or Queue
-            consumer2 = session.createConsumer(destination);
+            consumer2 = session.createConsumer(queue);
 
             // Wait for a message
-            Message message = consumer2.receive(0);
+            Message message = consumer2.receive(10000);
 
             System.out.println("ActiveMQ-Received 2: " + message);
 
@@ -101,6 +101,7 @@ public class ActiveMQJms {
             e.printStackTrace();
         }
     }
+    */
     
     private void connect() {
         // Create a ConnectionFactory

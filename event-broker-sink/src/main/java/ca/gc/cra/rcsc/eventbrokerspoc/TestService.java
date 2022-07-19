@@ -17,6 +17,7 @@ public class TestService {
 	private SolacePubSub solace;
 	private NatsBroker nats;
 	private ActiveMQJms activeMq;
+	private ActiveMQJms activeMqR;
 	
 	@GET
     @Path("/solace")
@@ -39,18 +40,20 @@ public class TestService {
 	@GET
     @Path("/activemq")
     public void connectToActiveMq() {
-		//if (activeMq == null) {
+		if (activeMq == null) {
 			activeMq = new ActiveMQJms();
 			activeMq.connectToTopic();
-		//}
+		}
     }
 
+	/*
 	@GET
     @Path("/activemqreceive")
     public void connectToActiveMq2() {
-		activeMq = new ActiveMQJms();
-		activeMq.receiveMessage();;
+		activeMqR = new ActiveMQJms();
+		activeMqR.receiveMessage();;
     }
+	*/
 	
 	@GET
 	@Path("/status")
