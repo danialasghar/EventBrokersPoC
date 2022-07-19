@@ -1,10 +1,12 @@
 package ca.gc.cra.rcsc.eventbrokerspoc;
 
+import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.sinks.ActiveMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.ActiveMQJms;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.NatsBroker;
@@ -14,10 +16,13 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sinks.SolacePubSub;
 @Path("/connect")
 public class TestService {
 
+	@Inject
+	ActiveMQ activeMqBean;
+
 	private SolacePubSub solace;
 	private NatsBroker nats;
 	private ActiveMQJms activeMq;
-	private ActiveMQJms activeMqR;
+	
 	
 	@GET
     @Path("/solace")
