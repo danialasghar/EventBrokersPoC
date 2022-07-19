@@ -41,7 +41,7 @@ public class TestService {
     public void connectToActiveMq() {
 		if (activeMq == null) {
 			activeMq = new ActiveMQJms();
-			activeMq.connectToTopic();
+			//activeMq.connectToTopic();
 		}
     }
 
