@@ -108,7 +108,7 @@ public class ActiveMQJms {
 
         try {
             // Create a Connection
-            connection = connectionFactory.createConnection();
+            connection = connectionFactory.createConnection("admin", "password");
             //connection.start();
             
             connection.setExceptionListener(new ExceptionListener() {

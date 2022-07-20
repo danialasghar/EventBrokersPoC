@@ -57,7 +57,7 @@ public class ActiveMqJms {
 
         try {
             // Create a Connection
-            connection = connectionFactory.createConnection();
+            connection = connectionFactory.createConnection("admin", "password");
             connection.start();
 
             // Create a Session
