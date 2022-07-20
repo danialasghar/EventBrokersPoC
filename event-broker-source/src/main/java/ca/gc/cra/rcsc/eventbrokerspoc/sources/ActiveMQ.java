@@ -10,8 +10,8 @@ import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 @ApplicationScoped
 public class ActiveMQ {
 
-    @Channel("new-artemis")
-    Emitter<String> messageEmitter;
+    @Channel("test-topic-out")
+    Emitter<String> emitter;
 
     private int instanceId;
     
@@ -26,9 +26,9 @@ public class ActiveMQ {
     public void sendMessage() {
         String message = Utils.buildMessage(instanceId);
 
-        messageEmitter.send(message);
+        emitter.send(message);
 
-        System.out.println("ActiveMQ-MESSAGE SENT: " + message);
+        System.out.println("ActiveMQBean-MESSAGE SENT: " + message);
     }
 
 }
