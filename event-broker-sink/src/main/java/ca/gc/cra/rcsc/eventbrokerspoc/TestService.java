@@ -76,7 +76,7 @@ public class TestService {
 		result += "Solace: " + Utils.isConnectedNullCheck(solace) + "\n";
 		result += "NATS: " + Utils.isConnectedNullCheck(nats) + "\n";
 		result += "RabbitMQ: " + Utils.isConnectedNullCheck(rabbitMq) + "\n";
-		result += "ActiveMQ: " + Utils.isConnectedNullCheck(activeMq) + "\n";
+		result += "IBM MQ: " + Utils.isConnectedNullCheck(ibmMq) + "\n";
 		
 		return result;
 	}
