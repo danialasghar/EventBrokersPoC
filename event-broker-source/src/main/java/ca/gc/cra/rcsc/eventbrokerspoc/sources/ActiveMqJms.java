@@ -5,7 +5,6 @@ import javax.jms.DeliveryMode;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
-import javax.jms.Queue;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 
@@ -53,21 +52,22 @@ public class ActiveMqJms {
 
     private void connect() {
         // Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(activeMqHost);
+        ActiveMQConnectionFactory connectionFactory = 
+            new ActiveMQConnectionFactory("admin", "password", activeMqHost);
 
         try {
             // Create a Connection
-            connection = connectionFactory.createConnection("admin", "password");
+            connection = connectionFactory.createConnection();
             connection.start();
 
             // Create a Session
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            // Create the Queue
-            Queue queue = session.createQueue(activeMqTopicName);
+            // Create the destination Topic/Queue
+            Destination destination = session.createQueue(activeMqTopicName);
 
             // Create a MessageProducer from the Session to the Topic or Queue
-            producer = session.createProducer(queue);
+            producer = session.createProducer(destination);
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
         } catch (JMSException e) {

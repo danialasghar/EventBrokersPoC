@@ -21,7 +21,6 @@ public class ActiveMQJms {
     private Connection connection;
     private Session session;
     private MessageConsumer consumer;
-    private MessageConsumer consumer2;
 
     public ActiveMQJms() {
 
@@ -65,7 +64,6 @@ public class ActiveMQJms {
                
             });
 
-            connection.start();
 
         } catch (JMSException e) {
             // TODO Auto-generated catch block
@@ -104,12 +102,13 @@ public class ActiveMQJms {
     
     private void connect() {
         // Create a ConnectionFactory
-        ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(activeMqHost);
+        ActiveMQConnectionFactory connectionFactory = 
+            new ActiveMQConnectionFactory("admin", "password", activeMqHost);
 
         try {
             // Create a Connection
-            connection = connectionFactory.createConnection("admin", "password");
-            //connection.start();
+            connection = connectionFactory.createConnection();
+            connection.start();
             
             connection.setExceptionListener(new ExceptionListener() {
                 public synchronized void onException(JMSException ex) {
