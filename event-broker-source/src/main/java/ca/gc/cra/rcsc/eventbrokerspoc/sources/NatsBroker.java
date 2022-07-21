@@ -38,16 +38,11 @@ public class NatsBroker {
 		try {
 			connection = Nats.connect(natsHost);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-
-			connection = null;
-		} catch (InterruptedException e) {
+		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 
 			connection = null;
 		}
-
 	}
 
 	private void loadConfiguration() {

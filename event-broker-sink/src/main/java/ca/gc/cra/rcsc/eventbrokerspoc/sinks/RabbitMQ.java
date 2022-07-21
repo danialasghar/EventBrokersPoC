@@ -5,6 +5,8 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.TimeUnit;
@@ -12,39 +14,74 @@ import java.util.concurrent.TimeoutException;
 
 public class RabbitMQ {
 
-    private final static String QUEUE_NAME = "POC";
-    ConnectionFactory factory;
-    Connection connection;
+    private ConnectionFactory factory;
+    private Connection connection;
+    
+    private String rabbitMqHost;
+    private int rabbitMqPort;
+    private String rabbitMqQueue;
+    private String rabbitMqUsername;
+    private String rabbitMqPassword;
 
     public RabbitMQ(){
-        this.factory = new ConnectionFactory();
-        this.factory.setHost("rabbitmq-demo-clusterip.rabbitmq-system.svc");
-        this.factory.setPort(5672);
-        this.factory.setUsername("default_user_VSFzxVHbwelOyeyHmSZ");
-        this.factory.setPassword("u0845E5Wl-AepkvZP1vObVLFnEvopyK6");
-        try {
-            this.connection = factory.newConnection();
-        } catch (IOException | TimeoutException e) {
-            throw new RuntimeException(e);
-        }
+        loadConfiguration();
+        connect();
     }
 
     public void receiveMessage(){
+        //FIXME: Should we be listening for incomming messages all the time?
         try{
             Channel channel = connection.createChannel();
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            channel.queueDeclare(rabbitMqQueue, false, false, false, null);
+
             System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
                 System.out.println(" [x] Received '" + message + "'");
             };
-            channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
+
+            channel.basicConsume(rabbitMqQueue, true, deliverCallback, consumerTag -> { });
 
             TimeUnit.MINUTES.sleep(10);
+            
             channel.abort();
             connection.close();
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private void connect() {
+        factory = new ConnectionFactory();
+        factory.setHost(rabbitMqHost);
+        factory.setPort(rabbitMqPort);
+        factory.setUsername(rabbitMqUsername);
+        factory.setPassword(rabbitMqPassword);
+
+        try {
+            connection = factory.newConnection();
+        } catch (IOException | TimeoutException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void loadConfiguration() {
+		rabbitMqHost = Utils.getStringProperty("rabbitmq.host");
+		rabbitMqPort = Utils.getIntProperty("rabbitmq.port");
+        rabbitMqQueue = Utils.getStringProperty("rabbitmq.queue");
+		rabbitMqUsername = Utils.getStringProperty("rabbitmq.username");
+		rabbitMqPassword = Utils.getStringProperty("rabbitmq.password");
+
+		printConfiguration();
+	}
+
+	private void printConfiguration() {
+		System.out.println("RabbitMq Config");
+		System.out.println("rabbitMqHost=" + rabbitMqHost);
+		System.out.println("rabbitMqPort=" + rabbitMqPort);
+        System.out.println("rabbitMqQueue=" + rabbitMqQueue);
+		System.out.println("rabbitMqUsername=" + rabbitMqUsername);
+		System.out.println("rabbitMqPassword=" + rabbitMqPassword);
+	}
 }

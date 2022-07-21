@@ -15,11 +15,11 @@ import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
 
 public class SolacePubSub {
 
-	private String solaceHost = "";
-	private String solaceUserName = "";
-	private String solacePassword = "";
-	private String solaceVpnName = "";
-	private String solaceTopicName = "";
+	private String solaceHost;
+	private String solaceUserName;
+	private String solacePassword;
+	private String solaceVpnName;
+	private String solaceTopicName;
 	
 	private JCSMPSession session;
 	private XMLMessageConsumer consumer;
@@ -34,11 +34,11 @@ public class SolacePubSub {
 	
 	public void connectToTopic() {
 		if (session == null) {
-			System.out.println("ERROR: No session to connectToTopic");
+			System.out.println("SOLACE-ERROR: No session to connectToTopic");
 			return;
 		}
 		if (consumer == null) {
-			System.out.println("ERROR: No consumer to connectToTopic");
+			System.out.println("SOLACE-ERROR: No consumer to connectToTopic");
 			return;
 		}
 		
@@ -53,11 +53,11 @@ public class SolacePubSub {
 	
 	public void diconnectFromTopic() {
 		if (session == null) {
-			System.out.println("ERROR: No session to diconnectFromTopic");
+			System.out.println("SOLACE-ERROR: No session to diconnectFromTopic");
 			return;
 		}
 		if (consumer == null) {
-			System.out.println("ERROR: No consumer to diconnectFromTopic");
+			System.out.println("SOLACE-ERROR: No consumer to diconnectFromTopic");
 			return;
 		}
 		
@@ -110,7 +110,7 @@ public class SolacePubSub {
 	
 	private void buildConsumer() {
 		if (session == null) {
-			System.out.println("ERROR: No session to buildConsumer");
+			System.out.println("SOLACE-ERROR: No session to buildConsumer");
 			return;
 		}
 		
@@ -130,7 +130,7 @@ public class SolacePubSub {
 
 			    @Override
 			    public void onException(JCSMPException e) {
-			        System.out.printf("Consumer received exception: %s%n",e);
+			        System.out.printf("SOLACE-Consumer received exception: %s%n",e);
 			    }
 			});
 		} catch (JCSMPException e) {

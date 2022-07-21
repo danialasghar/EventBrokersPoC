@@ -20,4 +20,18 @@ public class Utils {
 
 		return optional.isPresent() ? optional.get() : "";
 	}
+
+	public static int getIntProperty(String propertyName) {
+		int result = 0;
+
+		String stringProperty = getStringProperty(propertyName);
+
+		try {
+			result = Integer.parseInt(stringProperty);
+		} catch (NumberFormatException e) {
+			System.out.println("Failed to parse int property: " + propertyName);
+		}
+
+		return result;
+	}
 }

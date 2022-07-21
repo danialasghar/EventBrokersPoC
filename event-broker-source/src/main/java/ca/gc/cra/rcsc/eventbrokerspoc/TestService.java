@@ -4,7 +4,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.ActiveMQ;
-import ca.gc.cra.rcsc.eventbrokerspoc.sources.ActiveMqJms;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.NatsBroker;
 import ca.gc.cra.rcsc.eventbrokerspoc.sources.RabbitMQ;
@@ -17,22 +16,24 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sources.ApacheKafka;
 public class TestService {
 
     @Inject
-    ActiveMQ activeMqBean;
+    private ActiveMQ activeMq;
+    @Inject
+    private ApacheKafka kakfa;
 
+    private RabbitMQ rabbitMq;
     private SolacePubSub solace;
     private NatsBroker nats;
-    private ActiveMqJms activeMq;
-    
-    @Inject
-    private ApacheKafka kakfa_source;
+    private IbmMQ ibmMq;
 
 
 	@GET
     @Path("/rabbitmq")
     public void testRabbitMq() {
-    	RabbitMQ rabbitMQ = new RabbitMQ(1);
+        if (null == rabbitMq) {
+            rabbitMq = new RabbitMQ(1);
+        }
 
-    	rabbitMQ.sendMessage();
+    	rabbitMq.sendMessage();
     }
 
 	@GET
@@ -51,36 +52,31 @@ public class TestService {
         if (null == nats) {
             nats = new NatsBroker(3);
         }
+        
+        nats.sendMessage();
+    }
 
-    	nats.sendMessage();
+    @GET
+    @Path("/activemq")
+    public void testActiveMq() {
+        // Injected instanceId = 4
+        activeMq.sendMessage();
+    }
+
+    @GET
+    @Path("/kafka")
+    public void testKafka() {
+        // Injected instanceId = 5
+        kakfa.sendMessage();
     }
 
     @GET
     @Path("/ibm")
     public void testIbmMQPub(){
-        IbmMQ ibmmq = new IbmMQ();
-        ibmmq.connectSend();
-    }
-
-    @GET
-    @Path("/activemq")
-    public void testActiveMQ() {
-        if (null == activeMq) {
-            activeMq = new ActiveMqJms(4);
+        if (null == ibmMq) {
+            ibmMq = new IbmMQ(6);
         }
-
-        activeMq.sendMessage();
+        ibmMq.connectSend();
     }
 
-    @GET
-    @Path("/activemqbean")
-    public void testActiveMQBean() {
-        activeMqBean.sendMessage();
-    }
-
-     @GET
-    @Path("/kafka")
-    public void testKafka() {
-        kakfa_source.sendMessage();
-    }
 }

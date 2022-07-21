@@ -9,7 +9,7 @@ public class ActiveMQ {
 
     @Incoming("test-topic-in")
     public void process(String incomingMessage) throws InterruptedException {
-        System.out.println("ActiveMQBean-RECEIVED: " + incomingMessage);
+        System.out.println("ActiveMQ-RECEIVED: " + incomingMessage);
     }
 
 }

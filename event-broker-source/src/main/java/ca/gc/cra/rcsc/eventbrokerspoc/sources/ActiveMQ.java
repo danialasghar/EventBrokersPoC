@@ -28,7 +28,7 @@ public class ActiveMQ {
 
         emitter.send(message);
 
-        System.out.println("ActiveMQBean-MESSAGE SENT: " + message);
+        System.out.println("ActiveMQ-MESSAGE SENT: " + message);
     }
 
 }

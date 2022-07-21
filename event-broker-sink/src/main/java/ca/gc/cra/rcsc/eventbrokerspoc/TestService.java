@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.ActiveMQ;
-import ca.gc.cra.rcsc.eventbrokerspoc.sinks.ActiveMQJms;
+import ca.gc.cra.rcsc.eventbrokerspoc.sinks.ApacheKafka;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.IbmMQ;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.NatsBroker;
 import ca.gc.cra.rcsc.eventbrokerspoc.sinks.RabbitMQ;
@@ -17,17 +17,20 @@ import ca.gc.cra.rcsc.eventbrokerspoc.sinks.SolacePubSub;
 public class TestService {
 
 	@Inject
-	ActiveMQ activeMqBean;
+	private ActiveMQ activeMq;
+	@Inject
+	private ApacheKafka kafka;
 
 	private SolacePubSub solace;
 	private NatsBroker nats;
-	private ActiveMQJms activeMq;
+	private RabbitMQ rabbitMq;
+	private IbmMQ ibmMq;
 	
 	
 	@GET
     @Path("/solace")
     public void connectToSolace() {
-		if (solace == null) {
+		if (null == solace) {
 			solace = new SolacePubSub();
 			solace.connectToTopic();
 		}
@@ -36,55 +39,46 @@ public class TestService {
 	@GET
     @Path("/nats")
     public void connectToNats() {
-		if (nats == null) {
+		if (null == nats) {
 			nats = new NatsBroker();
 			nats.connectToSubject();
 		}
     }
 
 	@GET
-    @Path("/activemq")
-    public void connectToActiveMq() {
-		if (activeMq == null) {
-			activeMq = new ActiveMQJms();
-			activeMq.connectToTopic();
-		}
-    }
+	@Path("/rabbit")
+	public void connectToRabbitMQ(){
+		//FIXME: Should we be listening for incomming messages all the time?
+		//if (null == rabbitMq) {
+			rabbitMq = new RabbitMQ();
+			rabbitMq.receiveMessage();
+		//}
+	}
 
-	/*
 	@GET
-    @Path("/activemqreceive")
-    public void connectToActiveMq2() {
-		activeMqR = new ActiveMQJms();
-		activeMqR.receiveMessage();;
-    }
-	*/
-	
+	@Path("/ibm")
+	public void connectToIbmMQ(){
+		//FIXME: Should we be listening for incomming messages all the time?
+		//if (null == ibmMq) {
+			ibmMq =  new IbmMQ();
+			ibmMq.getMessage();
+		//}
+	}
+
 	@GET
 	@Path("/status")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getStatus() {
 		String result = "Status:\n";
 		
+		result += "ActiveMQ: " + Utils.isConnectedNullCheck(activeMq) + "\n";
+		result += "ApacheKafka: " + Utils.isConnectedNullCheck(kafka) + "\n";
 		result += "Solace: " + Utils.isConnectedNullCheck(solace) + "\n";
 		result += "NATS: " + Utils.isConnectedNullCheck(nats) + "\n";
+		result += "RabbitMQ: " + Utils.isConnectedNullCheck(rabbitMq) + "\n";
 		result += "ActiveMQ: " + Utils.isConnectedNullCheck(activeMq) + "\n";
 		
 		return result;
-	}
-
-	@GET
-	@Path("/rabbit")
-	public void connectToRabbitMQ(){
-		RabbitMQ rabbitMQ = new RabbitMQ();
-		rabbitMQ.receiveMessage();
-	}
-
-	@GET
-	@Path("/ibm")
-	public void connectToIbmMQ(){
-		IbmMQ ibm =  new IbmMQ();
-		ibm.getMessage();
 	}
 
 }

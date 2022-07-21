@@ -9,21 +9,27 @@ import com.ibm.msg.client.jms.JmsConnectionFactory;
 import com.ibm.msg.client.jms.JmsFactoryFactory;
 import com.ibm.msg.client.wmq.WMQConstants;
 
+import ca.gc.cra.rcsc.eventbrokerspoc.Utils;
+
 public class IbmMQ {
 
     // System exit status value (assume unset value to be 1)
     private static int status = 1;
 
     // Create variables for the connection to MQ
-    private static final String HOST = "guimq-ibm-mq.ibmmq.svc"; // Host name or IP address
-    private static final int PORT = 1414; // Listener port for your queue manager
-    private static final String CHANNEL = "APP"; // Channel name
-    private static final String QMGR = "QM1"; // Queue manager name
-    private static final String APP_USER = "admin"; // User name that application uses to connect to MQ
-    private static final String APP_PASSWORD = "passw0rd"; // Password that the application uses to connect to MQ
-    private static final String QUEUE_NAME = "DEV.QUEUE.1"; // Queue that the application uses to put and get messages to and from
+    private String ibmMqHost;
+    private int ibmMqPort;
+    private String ibmMqChannel;
+    private String ibmMqQmgr;
+    private String ibmMqUser;
+    private String ibmMqPassword;
+    private String ibmMqQueueName;
 
+    public IbmMQ() {
+        loadConfiguration();
+    }
 
+    //FIXME: Should we be listening for incomming messages all the time?
     public  void getMessage() {
 
         // Variables
@@ -39,20 +45,20 @@ public class IbmMQ {
             JmsConnectionFactory cf = ff.createConnectionFactory();
 
             // Set the properties
-            cf.setStringProperty(WMQConstants.WMQ_HOST_NAME, HOST);
-            cf.setIntProperty(WMQConstants.WMQ_PORT, PORT);
-            cf.setStringProperty(WMQConstants.WMQ_CHANNEL, CHANNEL);
+            cf.setStringProperty(WMQConstants.WMQ_HOST_NAME, ibmMqHost);
+            cf.setIntProperty(WMQConstants.WMQ_PORT, ibmMqPort);
+            cf.setStringProperty(WMQConstants.WMQ_CHANNEL, ibmMqChannel);
             cf.setIntProperty(WMQConstants.WMQ_CONNECTION_MODE, WMQConstants.WMQ_CM_CLIENT);
-            cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, QMGR);
+            cf.setStringProperty(WMQConstants.WMQ_QUEUE_MANAGER, ibmMqQmgr);
             cf.setStringProperty(WMQConstants.WMQ_APPLICATIONNAME, "JmsPutGet (JMS)");
             cf.setBooleanProperty(WMQConstants.USER_AUTHENTICATION_MQCSP, true);
-            cf.setStringProperty(WMQConstants.USERID, APP_USER);
-            cf.setStringProperty(WMQConstants.PASSWORD, APP_PASSWORD);
+            cf.setStringProperty(WMQConstants.USERID, ibmMqUser);
+            cf.setStringProperty(WMQConstants.PASSWORD, ibmMqPassword);
             //cf.setStringProperty(WMQConstants.WMQ_SSL_CIPHER_SUITE, "*TLS12");
 
             // Create JMS objects
             context = cf.createContext();
-            destination = context.createQueue("queue:///" + QUEUE_NAME);
+            destination = context.createQueue("queue:///" + ibmMqQueueName);
 
             consumer = context.createConsumer(destination); // autoclosable
             String receivedMessage = consumer.receiveBody(String.class, 15000); // in ms or 15 seconds
@@ -114,5 +120,28 @@ public class IbmMQ {
         }
         return;
     }
+
+    private void loadConfiguration() {
+		ibmMqHost = Utils.getStringProperty("ibmmq.host");
+        ibmMqPort = Utils.getIntProperty("ibmmq.port");
+		ibmMqChannel = Utils.getStringProperty("ibmmq.channel");
+		ibmMqQmgr = Utils.getStringProperty("ibmmq.qmgr");
+        ibmMqUser = Utils.getStringProperty("ibmmq.user");
+		ibmMqPassword = Utils.getStringProperty("ibmmq.password");
+		ibmMqQueueName = Utils.getStringProperty("ibmmq.queue.name");
+
+		printConfiguration();
+	}
+
+	private void printConfiguration() {
+		System.out.println("IBM MQ Config");
+		System.out.println("ibmMqHost=" + ibmMqHost);
+		System.out.println("ibmMqPort=" + ibmMqPort);
+		System.out.println("ibmMqChannel=" + ibmMqChannel);
+		System.out.println("ibmMqQmgr=" + ibmMqQmgr);
+		System.out.println("ibmMqUser=" + ibmMqUser);
+        System.out.println("ibmMqPassword=" + ibmMqPassword);
+        System.out.println("ibmMqQueueName=" + ibmMqQueueName);
+	}
 
 }

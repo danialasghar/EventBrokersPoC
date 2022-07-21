@@ -16,11 +16,11 @@ import com.solacesystems.jcsmp.XMLMessageProducer;
 public class SolacePubSub {
 	private int instanceID;
 
-	private String solaceHost = "";
-	private String solaceUserName = "";
-	private String solacePassword = "";
-	private String solaceVpnName = "";
-	private String solaceTopicName = "";
+	private String solaceHost;
+	private String solaceUserName;
+	private String solacePassword;
+	private String solaceVpnName;
+	private String solaceTopicName;
 	
 	private JCSMPSession session;
 	private XMLMessageProducer producer;
