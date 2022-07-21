@@ -63,7 +63,7 @@ public class IbmMQ {
             consumer = context.createConsumer(destination); // autoclosable
             String receivedMessage = consumer.receiveBody(String.class, 15000); // in ms or 15 seconds
 
-            System.out.println("\nReceived message:\n" + receivedMessage);
+            System.out.println("IBM MQ: Received message:" + receivedMessage);
 
             context.close();
 
@@ -80,7 +80,7 @@ public class IbmMQ {
      * Record this run as successful.
      */
     private static void recordSuccess() {
-        System.out.println("SUCCESS");
+        System.out.println("IBM MQ: SUCCESS");
         status = 0;
         return;
     }
@@ -98,7 +98,7 @@ public class IbmMQ {
                 System.out.println(ex);
             }
         }
-        System.out.println("FAILURE");
+        System.out.println("IBM MQ: FAILURE");
         status = -1;
         return;
     }
@@ -112,7 +112,7 @@ public class IbmMQ {
         System.out.println(jmsex);
         Throwable innerException = jmsex.getLinkedException();
         if (innerException != null) {
-            System.out.println("Inner exception(s):");
+            System.out.println("IBM MQ: Inner exception(s):");
         }
         while (innerException != null) {
             System.out.println(innerException);

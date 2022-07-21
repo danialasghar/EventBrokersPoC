@@ -34,11 +34,11 @@ public class RabbitMQ {
             Channel channel = connection.createChannel();
             channel.queueDeclare(rabbitMqQueue, false, false, false, null);
 
-            System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+            System.out.println("RabbitMQ: Waiting for messages. To exit press CTRL+C");
 
             DeliverCallback deliverCallback = (consumerTag, delivery) -> {
                 String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
-                System.out.println(" [x] Received '" + message + "'");
+                System.out.println("RabbitMQ: Received: " + message);
             };
 
             channel.basicConsume(rabbitMqQueue, true, deliverCallback, consumerTag -> { });
@@ -77,7 +77,7 @@ public class RabbitMQ {
 	}
 
 	private void printConfiguration() {
-		System.out.println("RabbitMq Config");
+		System.out.println("RabbitMQ Config");
 		System.out.println("rabbitMqHost=" + rabbitMqHost);
 		System.out.println("rabbitMqPort=" + rabbitMqPort);
         System.out.println("rabbitMqQueue=" + rabbitMqQueue);

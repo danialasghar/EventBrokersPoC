@@ -49,7 +49,7 @@ public class IbmMQ {
 
         try {
             // Create a connection factory
-            System.out.println("TRYING CONNECTION");
+            System.out.println("IBM MQ:TRYING CONNECTION");
             JmsFactoryFactory ff = JmsFactoryFactory.getInstance(WMQConstants.WMQ_PROVIDER);
             JmsConnectionFactory cf = ff.createConnectionFactory();
 
@@ -65,7 +65,7 @@ public class IbmMQ {
             cf.setStringProperty(WMQConstants.PASSWORD, ibmMqPassword);
             //cf.setStringProperty(WMQConstants.WMQ_SSL_CIPHER_SUITE, "*TLS12");
 
-            System.out.println("AFTER CONNECTION");
+            System.out.println("IBM MQ:AFTER CONNECTION");
             // Create JMS objects
             context = cf.createContext();
             destination = context.createQueue("queue:///" + ibmMqQueueName);
@@ -75,7 +75,7 @@ public class IbmMQ {
 
             producer = context.createProducer();
             producer.send(destination, message);
-            System.out.println("Sent message:\n" + message);
+            System.out.println("IBM MQ: Sent message: " + message);
 
             context.close();
 
@@ -92,7 +92,7 @@ public class IbmMQ {
      * Record this run as successful.
      */
     private static void recordSuccess() {
-        System.out.println("SUCCESS");
+        System.out.println("IBM MQ: SUCCESS");
         status = 0;
         return;
     }
@@ -110,7 +110,7 @@ public class IbmMQ {
                 System.out.println(ex);
             }
         }
-        System.out.println("FAILURE");
+        System.out.println("IBM MQ: FAILURE");
         status = -1;
         return;
     }
@@ -124,7 +124,7 @@ public class IbmMQ {
         System.out.println(jmsex);
         Throwable innerException = jmsex.getLinkedException();
         if (innerException != null) {
-            System.out.println("Inner exception(s):");
+            System.out.println("IBM MQ: Inner exception(s):");
         }
         while (innerException != null) {
             System.out.println(innerException);
