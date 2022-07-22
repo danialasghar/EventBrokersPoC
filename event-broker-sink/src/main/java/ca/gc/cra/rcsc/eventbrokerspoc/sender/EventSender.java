@@ -24,21 +24,25 @@ public class EventSender {
 
 
     public void sendData(String data) {
-        System.out.println("EventSender sending=" + data);
+        try {
+            System.out.println("EventSender sending=" + data);
 
-        RestAssured.baseURI = storageUrl;
-        RequestSpecification request = RestAssured.given(); 
+            RestAssured.baseURI = storageUrl;
+            RequestSpecification request = RestAssured.given(); 
 
-        // Add a header stating the Request body is a JSON
-        request.header("Content-Type", "application/json");
+            // Add a header stating the Request body is a JSON
+            request.header("Content-Type", "application/json");
 
-        // Add the Json to the body of the request
-        request.body(convertToJson(data));
+            // Add the Json to the body of the request
+            request.body(convertToJson(data));
 
-        Response response = request.post("/");
-        int statusCode = response.getStatusCode();
+            Response response = request.post("/");
+            int statusCode = response.getStatusCode();
         
-        System.out.println("EventSender statusCode=" + statusCode);
+            System.out.println("EventSender statusCode=" + statusCode);
+        } catch (Exception e) {
+            System.out.println("EventSender exception" + e);
+        }
     }
 
     private String convertToJson(String data) {
@@ -46,7 +50,7 @@ public class EventSender {
     }
 
     private void loadConfiguration() {
-		storageUrl = Utils.getStringProperty("solace.host");
+		storageUrl = Utils.getStringProperty("event.storage.service.url");
 
 		printConfiguration();
 	}
