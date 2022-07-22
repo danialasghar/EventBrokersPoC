@@ -79,6 +79,10 @@
       <artifactId>amqp-client</artifactId>
       <version>5.15.0</version>
     </dependency>
+    <dependency>
+      <groupId>io.rest-assured</groupId>
+      <artifactId>rest-assured</artifactId>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
