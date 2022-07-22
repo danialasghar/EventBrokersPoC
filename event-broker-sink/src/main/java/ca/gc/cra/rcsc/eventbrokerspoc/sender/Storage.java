@@ -29,6 +29,7 @@ public class Storage {
         try {
             System.out.println("EventSender sending=" + data);
             
+            //FIXE: This did not work! :(
             storageService.saveJsonRecord(buildEvent(data));
         
             //System.out.println("EventSender statusCode=" + statusCode);
