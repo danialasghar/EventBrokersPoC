@@ -36,7 +36,7 @@ public class EventSender {
             // Add the Json to the body of the request
             request.body(convertToJson(data));
 
-            Response response = request.post("/");
+            Response response = request.post("/json");
             int statusCode = response.getStatusCode();
         
             System.out.println("EventSender statusCode=" + statusCode);
